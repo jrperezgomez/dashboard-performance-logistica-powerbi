@@ -1,0 +1,790 @@
+{
+  "dashboard": {
+    "metadata": {
+      "name": "Dashboard Operacional Logístico",
+      "version": "1.0",
+      "author": "José Pérez",
+      "date": "2026-07-07",
+      "description": "Dashboard interativo para análise de operações logísticas",
+      "currency": "BRL",
+      "language": "pt-BR"
+    },
+    "dataModel": {
+      "tables": [
+        {
+          "name": "fato_operacoes",
+          "type": "Fact",
+          "granularity": "One row per operation",
+          "source": "CSV",
+          "columns": [
+            {
+              "name": "data",
+              "type": "Date",
+              "format": "dd/mm/yyyy",
+              "nullable": false
+            },
+            {
+              "name": "operador",
+              "type": "Text",
+              "example": "OP001",
+              "nullable": false
+            },
+            {
+              "name": "turno",
+              "type": "Text",
+              "values": ["Matutino", "Vespertino", "Noturno"],
+              "nullable": false
+            },
+            {
+              "name": "produto",
+              "type": "Text",
+              "example": "Notebook",
+              "nullable": false
+            },
+            {
+              "name": "categoria",
+              "type": "Text",
+              "values": ["Eletrônicos", "Vestuário", "Alimentos", "Limpeza", "Higiene", "Mobiliário", "Papelaria"],
+              "nullable": false
+            },
+            {
+              "name": "volume",
+              "type": "Integer",
+              "range": "10-500",
+              "aggregate": "Sum",
+              "nullable": false
+            },
+            {
+              "name": "tempo_processamento_minutos",
+              "type": "Integer",
+              "range": "5-180",
+              "aggregate": "Sum",
+              "nullable": false
+            },
+            {
+              "name": "status",
+              "type": "Text",
+              "values": ["Completado", "Com_Erro", "Incompleto"],
+              "nullable": false
+            },
+            {
+              "name": "divergencia",
+              "type": "Integer",
+              "values": [0, 1],
+              "nullable": false
+            },
+            {
+              "name": "acuracia_percentual",
+              "type": "Integer",
+              "range": "0-100",
+              "aggregate": "Average",
+              "nullable": false
+            },
+            {
+              "name": "sla_cumprido",
+              "type": "Integer",
+              "values": [0, 1],
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "name": "dim_data",
+          "type": "Dimension",
+          "source": "Generated from fato_operacoes[data]",
+          "columns": [
+            {
+              "name": "Data",
+              "type": "Date",
+              "format": "dd/mm/yyyy"
+            },
+            {
+              "name": "Ano",
+              "type": "Integer",
+              "formula": "YEAR([Data])"
+            },
+            {
+              "name": "Mês",
+              "type": "Integer",
+              "formula": "MONTH([Data])"
+            },
+            {
+              "name": "Nome Mês",
+              "type": "Text",
+              "formula": "FORMAT([Data], \"MMMM\")"
+            },
+            {
+              "name": "Dia",
+              "type": "Integer",
+              "formula": "DAY([Data])"
+            },
+            {
+              "name": "Dia Semana",
+              "type": "Text",
+              "formula": "FORMAT([Data], \"DDDD\")"
+            },
+            {
+              "name": "Semana",
+              "type": "Integer",
+              "formula": "WEEKNUM([Data])"
+            },
+            {
+              "name": "Trimestre",
+              "type": "Integer",
+              "formula": "ROUNDUP(MONTH([Data])/3, 0)"
+            }
+          ]
+        },
+        {
+          "name": "dim_operador",
+          "type": "Dimension",
+          "source": "DISTINCT(fato_operacoes[operador])",
+          "columns": [
+            {
+              "name": "Código",
+              "type": "Text"
+            },
+            {
+              "name": "Experiência (meses)",
+              "type": "Integer",
+              "range": "5-48"
+            },
+            {
+              "name": "Treinado",
+              "type": "Boolean"
+            }
+          ]
+        },
+        {
+          "name": "dim_turno",
+          "type": "Dimension",
+          "rows": 3,
+          "columns": [
+            {
+              "name": "Nome",
+              "type": "Text",
+              "values": ["Matutino", "Vespertino", "Noturno"]
+            },
+            {
+              "name": "Hora Inicio",
+              "type": "Time",
+              "values": ["06:00", "14:00", "22:00"]
+            },
+            {
+              "name": "Hora Fim",
+              "type": "Time",
+              "values": ["14:00", "22:00", "06:00"]
+            }
+          ]
+        },
+        {
+          "name": "dim_produto",
+          "type": "Dimension",
+          "source": "DISTINCT(fato_operacoes[categoria], fato_operacoes[produto])",
+          "columns": [
+            {
+              "name": "Categoria",
+              "type": "Text"
+            },
+            {
+              "name": "Produto",
+              "type": "Text"
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "from": "dim_data[Data]",
+          "to": "fato_operacoes[data]",
+          "cardinality": "1:N",
+          "direction": "Both",
+          "active": true
+        },
+        {
+          "from": "dim_operador[Código]",
+          "to": "fato_operacoes[operador]",
+          "cardinality": "1:N",
+          "direction": "Both",
+          "active": true
+        },
+        {
+          "from": "dim_turno[Nome]",
+          "to": "fato_operacoes[turno]",
+          "cardinality": "1:N",
+          "direction": "Both",
+          "active": true
+        },
+        {
+          "from": "dim_produto[Categoria]",
+          "to": "fato_operacoes[categoria]",
+          "cardinality": "1:N",
+          "direction": "Both",
+          "active": true
+        }
+      ]
+    },
+    "measures": [
+      {
+        "name": "Total Volume",
+        "dax": "SUM(fato_operacoes[volume])",
+        "format": "0",
+        "unit": "itens",
+        "category": "Volume",
+        "tooltip": "Total de unidades processadas no período"
+      },
+      {
+        "name": "Produtividade Média",
+        "dax": "SUM(fato_operacoes[volume]) / SUM(fato_operacoes[tempo_processamento_minutos])",
+        "format": "0.00",
+        "unit": "itens/min",
+        "category": "Produtividade",
+        "tooltip": "Eficiência: unidades por minuto"
+      },
+      {
+        "name": "Tempo Médio Processamento",
+        "dax": "AVERAGE(fato_operacoes[tempo_processamento_minutos])",
+        "format": "0",
+        "unit": "minutos",
+        "category": "Tempo",
+        "tooltip": "Ciclo médio de operação"
+      },
+      {
+        "name": "Acurácia Média",
+        "dax": "AVERAGE(fato_operacoes[acuracia_percentual])",
+        "format": "0.00%",
+        "unit": "%",
+        "category": "Qualidade",
+        "tooltip": "Taxa de precisão em operações"
+      },
+      {
+        "name": "Taxa Divergência",
+        "dax": "VAR Divergencias = COUNTIF(fato_operacoes[divergencia], 1) VAR Total = COUNTA(fato_operacoes[divergencia]) RETURN IF(Total = 0, 0, DIVIDE(Divergencias, Total, 0) * 100)",
+        "format": "0.00%",
+        "unit": "%",
+        "category": "Qualidade",
+        "tooltip": "Percentual de erros identificados"
+      },
+      {
+        "name": "Cumprimento SLA",
+        "dax": "VAR Cumprido = COUNTIF(fato_operacoes[sla_cumprido], 1) VAR Total = COUNTA(fato_operacoes[sla_cumprido]) RETURN IF(Total = 0, 0, DIVIDE(Cumprido, Total, 0) * 100)",
+        "format": "0.00%",
+        "unit": "%",
+        "category": "SLA",
+        "tooltip": "Operações dentro do prazo"
+      },
+      {
+        "name": "Total Operações",
+        "dax": "COUNTA(fato_operacoes[data])",
+        "format": "0",
+        "unit": "ops",
+        "category": "Volume",
+        "tooltip": "Número total de operações"
+      },
+      {
+        "name": "Operações Com Erro",
+        "dax": "COUNTIF(fato_operacoes[status], \"Com_Erro\")",
+        "format": "0",
+        "unit": "ops",
+        "category": "Qualidade",
+        "tooltip": "Operações com problemas"
+      }
+    ],
+    "pages": [
+      {
+        "pageNumber": 1,
+        "name": "Visão Executiva",
+        "layout": "grid",
+        "backgroundColor": "#FFFFFF",
+        "description": "KPIs principais e tendências operacionais",
+        "visuals": [
+          {
+            "id": "card_volume",
+            "type": "Card",
+            "position": { "x": 0, "y": 0, "width": 250, "height": 140 },
+            "measure": "Total Volume",
+            "title": "Volume Processado",
+            "icon": "📦",
+            "format": "0",
+            "backgroundColor": "#F0F6FE",
+            "titleColor": "#0078D4",
+            "valueColor": "#0078D4",
+            "tooltipOn": true
+          },
+          {
+            "id": "card_produtividade",
+            "type": "Card",
+            "position": { "x": 250, "y": 0, "width": 250, "height": 140 },
+            "measure": "Produtividade Média",
+            "title": "Produtividade",
+            "icon": "⚡",
+            "format": "0.00",
+            "backgroundColor": "#F0FEF6",
+            "titleColor": "#107C10",
+            "valueColor": "#107C10",
+            "tooltipOn": true
+          },
+          {
+            "id": "card_sla",
+            "type": "Card",
+            "position": { "x": 500, "y": 0, "width": 250, "height": 140 },
+            "measure": "Cumprimento SLA",
+            "title": "SLA Cumprido",
+            "icon": "✓",
+            "format": "0.00%",
+            "backgroundColor": "#FEF8F0",
+            "titleColor": "#FFB900",
+            "valueColor": "#FFB900",
+            "tooltipOn": true
+          },
+          {
+            "id": "card_acuracia",
+            "type": "Card",
+            "position": { "x": 750, "y": 0, "width": 250, "height": 140 },
+            "measure": "Acurácia Média",
+            "title": "Acurácia",
+            "icon": "🎯",
+            "format": "0.00%",
+            "backgroundColor": "#FEF6F0",
+            "titleColor": "#E81123",
+            "valueColor": "#E81123",
+            "tooltipOn": true
+          },
+          {
+            "id": "line_volume_timeline",
+            "type": "LineChart",
+            "position": { "x": 0, "y": 150, "width": 750, "height": 300 },
+            "title": "Volume por Data",
+            "xAxis": "dim_data[Data]",
+            "yAxis": "Total Volume",
+            "lineColor": "#0078D4",
+            "markerSize": 6,
+            "tooltipFormat": "<b>{x}</b><br>Volume: {y} itens",
+            "legend": false,
+            "dataLabels": false
+          },
+          {
+            "id": "bar_sla_turno",
+            "type": "BarChart",
+            "position": { "x": 750, "y": 150, "width": 250, "height": 300 },
+            "title": "SLA por Turno",
+            "category": "dim_turno[Nome]",
+            "value": "Cumprimento SLA",
+            "barColor": "#0078D4",
+            "legend": false,
+            "sort": "Descending",
+            "tooltipFormat": "<b>{x}</b><br>SLA: {y}%"
+          },
+          {
+            "id": "table_kpi_summary",
+            "type": "Table",
+            "position": { "x": 0, "y": 460, "width": 1000, "height": 180 },
+            "title": "Resumo KPIs",
+            "columns": [
+              {
+                "field": "dim_turno[Nome]",
+                "header": "Turno",
+                "width": 120
+              },
+              {
+                "field": "Total Volume",
+                "header": "Volume",
+                "format": "0",
+                "width": 100,
+                "alignment": "Right"
+              },
+              {
+                "field": "Produtividade Média",
+                "header": "Produtividade",
+                "format": "0.00",
+                "width": 130,
+                "alignment": "Right"
+              },
+              {
+                "field": "Cumprimento SLA",
+                "header": "SLA %",
+                "format": "0.00%",
+                "width": 100,
+                "alignment": "Right"
+              },
+              {
+                "field": "Acurácia Média",
+                "header": "Acurácia %",
+                "format": "0.00%",
+                "width": 120,
+                "alignment": "Right"
+              },
+              {
+                "field": "Taxa Divergência",
+                "header": "Divergência %",
+                "format": "0.00%",
+                "width": 130,
+                "alignment": "Right"
+              }
+            ],
+            "alternatingRowColor": true,
+            "frozenHeader": true
+          }
+        ],
+        "slicers": [
+          {
+            "id": "slicer_data",
+            "type": "DateRange",
+            "field": "dim_data[Data]",
+            "position": { "x": 0, "y": -40, "width": 300, "height": 30 },
+            "label": "Período",
+            "defaultRange": "Last 90 days"
+          },
+          {
+            "id": "slicer_turno",
+            "type": "Dropdown",
+            "field": "dim_turno[Nome]",
+            "position": { "x": 310, "y": -40, "width": 200, "height": 30 },
+            "label": "Turno",
+            "multiSelect": true
+          },
+          {
+            "id": "slicer_categoria",
+            "type": "Dropdown",
+            "field": "dim_produto[Categoria]",
+            "position": { "x": 520, "y": -40, "width": 200, "height": 30 },
+            "label": "Categoria",
+            "multiSelect": true
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "name": "Produtividade Operacional",
+        "layout": "grid",
+        "backgroundColor": "#FFFFFF",
+        "description": "Análise de performance por operador e turno",
+        "visuals": [
+          {
+            "id": "table_operador_ranking",
+            "type": "Table",
+            "position": { "x": 0, "y": 0, "width": 600, "height": 500 },
+            "title": "Ranking de Operadores",
+            "columns": [
+              {
+                "field": "Ranking",
+                "header": "Rank",
+                "format": "0",
+                "width": 50,
+                "alignment": "Center"
+              },
+              {
+                "field": "dim_operador[Código]",
+                "header": "Operador",
+                "width": 100
+              },
+              {
+                "field": "Produtividade Média",
+                "header": "Produtividade",
+                "format": "0.00",
+                "width": 130,
+                "alignment": "Right"
+              },
+              {
+                "field": "Total Volume",
+                "header": "Volume",
+                "format": "0",
+                "width": 100,
+                "alignment": "Right"
+              },
+              {
+                "field": "Tempo Médio Processamento",
+                "header": "Tempo Médio",
+                "format": "0",
+                "width": 120,
+                "alignment": "Right"
+              }
+            ],
+            "sort": "Produtividade Média DESC",
+            "conditionalFormatting": {
+              "top5": "#C6E0B4",
+              "bottom5": "#F8CBAD"
+            }
+          },
+          {
+            "id": "bar_produtividade_operador",
+            "type": "BarChart",
+            "position": { "x": 610, "y": 0, "width": 390, "height": 250 },
+            "title": "Produtividade por Operador",
+            "category": "dim_operador[Código]",
+            "value": "Produtividade Média",
+            "barColor": "#107C10",
+            "dataLabels": true,
+            "legend": false,
+            "sort": "Descending"
+          },
+          {
+            "id": "bar_volume_turno",
+            "type": "BarChart",
+            "position": { "x": 610, "y": 260, "width": 390, "height": 240 },
+            "title": "Volume por Turno",
+            "category": "dim_turno[Nome]",
+            "value": "Total Volume",
+            "barColor": "#0078D4",
+            "dataLabels": true,
+            "legend": false
+          }
+        ],
+        "slicers": [
+          {
+            "id": "slicer_operador",
+            "type": "Dropdown",
+            "field": "dim_operador[Código]",
+            "position": { "x": 0, "y": -40, "width": 300, "height": 30 },
+            "label": "Operador",
+            "multiSelect": true
+          },
+          {
+            "id": "slicer_turno_page2",
+            "type": "Dropdown",
+            "field": "dim_turno[Nome]",
+            "position": { "x": 310, "y": -40, "width": 200, "height": 30 },
+            "label": "Turno",
+            "multiSelect": true
+          }
+        ]
+      },
+      {
+        "pageNumber": 3,
+        "name": "Qualidade Operacional",
+        "layout": "grid",
+        "backgroundColor": "#FFFFFF",
+        "description": "Análise de erros, divergências e acurácia",
+        "visuals": [
+          {
+            "id": "pie_divergencia_categoria",
+            "type": "PieChart",
+            "position": { "x": 0, "y": 0, "width": 500, "height": 350 },
+            "title": "Divergências por Categoria",
+            "legend": "dim_produto[Categoria]",
+            "value": "Operações Com Erro",
+            "dataLabels": true,
+            "colors": ["#E81123", "#FFB900", "#107C10", "#0078D4", "#605E5C"]
+          },
+          {
+            "id": "bar_acuracia_operador",
+            "type": "BarChart",
+            "position": { "x": 510, "y": 0, "width": 490, "height": 350 },
+            "title": "Acurácia por Operador",
+            "category": "dim_operador[Código]",
+            "value": "Acurácia Média",
+            "barColor": "#0078D4",
+            "referenceLine": {
+              "value": 95,
+              "label": "Meta",
+              "color": "#FFB900"
+            },
+            "dataLabels": true,
+            "sort": "Ascending"
+          },
+          {
+            "id": "table_produtos_criticos",
+            "type": "Table",
+            "position": { "x": 0, "y": 360, "width": 1000, "height": 280 },
+            "title": "Produtos Críticos (Acurácia < 95%)",
+            "columns": [
+              {
+                "field": "dim_produto[Categoria]",
+                "header": "Categoria",
+                "width": 150
+              },
+              {
+                "field": "dim_produto[Produto]",
+                "header": "Produto",
+                "width": 200
+              },
+              {
+                "field": "Total Volume",
+                "header": "Volume",
+                "format": "0",
+                "width": 100,
+                "alignment": "Right"
+              },
+              {
+                "field": "Acurácia Média",
+                "header": "Acurácia %",
+                "format": "0.00%",
+                "width": 120,
+                "alignment": "Right"
+              },
+              {
+                "field": "Operações Com Erro",
+                "header": "Erros",
+                "format": "0",
+                "width": 80,
+                "alignment": "Right"
+              },
+              {
+                "field": "Taxa Divergência",
+                "header": "Taxa Divergência %",
+                "format": "0.00%",
+                "width": 150,
+                "alignment": "Right"
+              }
+            ],
+            "filters": "Acurácia Média < 0.95",
+            "sort": "Acurácia Média ASC",
+            "conditionalFormatting": {
+              "acuracia_below_90": "#FEE2E2"
+            }
+          }
+        ],
+        "slicers": [
+          {
+            "id": "slicer_categoria_page3",
+            "type": "Dropdown",
+            "field": "dim_produto[Categoria]",
+            "position": { "x": 0, "y": -40, "width": 300, "height": 30 },
+            "label": "Categoria",
+            "multiSelect": true
+          }
+        ]
+      },
+      {
+        "pageNumber": 4,
+        "name": "Tendências",
+        "layout": "grid",
+        "backgroundColor": "#FFFFFF",
+        "description": "Análise de evoluções e gargalos operacionais",
+        "visuals": [
+          {
+            "id": "combo_volume_acuracia",
+            "type": "ComboChart",
+            "position": { "x": 0, "y": 0, "width": 700, "height": 320 },
+            "title": "Evolução Semanal",
+            "xAxis": "dim_data[Semana]",
+            "yAxis1": {
+              "measure": "Total Volume",
+              "type": "Column",
+              "color": "#0078D4"
+            },
+            "yAxis2": {
+              "measure": "Acurácia Média",
+              "type": "Line",
+              "color": "#107C10"
+            },
+            "referenceLine": {
+              "value": 0.95,
+              "label": "Meta Acurácia",
+              "color": "#FFB900"
+            },
+            "dataLabels": true
+          },
+          {
+            "id": "bar_turno_comparison",
+            "type": "BarChart",
+            "position": { "x": 720, "y": 0, "width": 280, "height": 320 },
+            "title": "Comparação Turnos",
+            "category": "dim_turno[Nome]",
+            "values": [
+              {
+                "measure": "Produtividade Média",
+                "color": "#0078D4"
+              },
+              {
+                "measure": "Cumprimento SLA",
+                "color": "#107C10"
+              }
+            ],
+            "barMode": "Grouped",
+            "dataLabels": true
+          },
+          {
+            "id": "heatmap_turno_dia",
+            "type": "HeatMap",
+            "position": { "x": 0, "y": 330, "width": 1000, "height": 310 },
+            "title": "Heatmap: Turno x Dia da Semana",
+            "rows": "dim_data[Dia Semana]",
+            "columns": "dim_turno[Nome]",
+            "value": "Produtividade Média",
+            "colorScale": {
+              "min": { "color": "#D1E7F5", "value": 0 },
+              "mid": { "color": "#70AD47", "value": 2 },
+              "max": { "color": "#E81123", "value": 5 }
+            },
+            "tooltipFormat": "<b>{row} - {col}</b><br>Produtividade: {value:.2f} itens/min"
+          }
+        ],
+        "slicers": [
+          {
+            "id": "slicer_data_page4",
+            "type": "DateRange",
+            "field": "dim_data[Data]",
+            "position": { "x": 0, "y": -40, "width": 300, "height": 30 },
+            "label": "Período",
+            "defaultRange": "Last 90 days"
+          }
+        ]
+      }
+    ],
+    "styling": {
+      "theme": "Corporate",
+      "primaryColor": "#0078D4",
+      "secondaryColor": "#107C10",
+      "warningColor": "#FFB900",
+      "dangerColor": "#E81123",
+      "backgroundColor": "#FFFFFF",
+      "gridColor": "#E5E5E5",
+      "textColor": "#1F1F1F",
+      "secondaryTextColor": "#605E5C",
+      "font": {
+        "family": "Segoe UI, Arial, sans-serif",
+        "title": { "size": 18, "weight": 600, "color": "#0078D4" },
+        "subtitle": { "size": 14, "weight": 400, "color": "#1F1F1F" },
+        "label": { "size": 11, "weight": 400, "color": "#605E5C" },
+        "value": { "size": 24, "weight": 700, "color": "#0078D4" }
+      },
+      "spacing": {
+        "padding": 20,
+        "margin": 15,
+        "gutter": 10
+      },
+      "shadows": {
+        "cardShadow": "0 2px 8px rgba(0,0,0,0.08)",
+        "hoverShadow": "0 4px 12px rgba(0,0,0,0.12)"
+      }
+    },
+    "interactions": {
+      "crossFiltering": true,
+      "tooltips": true,
+      "pageNavigation": true,
+      "drillThrough": false,
+      "bookmarks": [
+        {
+          "name": "Executive Summary",
+          "page": 1,
+          "filters": {}
+        },
+        {
+          "name": "Top Performers",
+          "page": 2,
+          "filters": {}
+        }
+      ]
+    },
+    "accessibility": {
+      "altText": true,
+      "highContrast": false,
+      "tooltipsForAll": true,
+      "keyboardNavigation": true
+    },
+    "publication": {
+      "powerBIService": {
+        "workspace": "Portfolio Logística",
+        "appName": "Dashboard Operacional",
+        "refreshSchedule": "Daily",
+        "shareWith": ["Stakeholders", "Operations Team"]
+      },
+      "exportSettings": {
+        "allowExport": true,
+        "formats": ["PDF", "PowerPoint", "CSV"],
+        "includePageBreaks": true
+      }
+    }
+  }
+}
