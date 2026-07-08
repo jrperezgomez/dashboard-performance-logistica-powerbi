@@ -1,0 +1,78 @@
+# Power BI
+*.pbix
+*.pbit
+*.pbi
+.pbigitignore
+.pbiworkspace
+*.backup
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vs/
+
+# OS
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Data (keep as needed)
+# Uncomment to ignore local data
+# data/*.csv
+# data/*.xlsx
+
+# Documentation (keep as needed)
+# docs/*.backup
