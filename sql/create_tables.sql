@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS dim_turno (
 -- TABELA DE FATOS
 -- ============================================
 
--- Tabela: Fato de Operações (granularidade: una operación = una línea)
+-- Tabela: Fato de Operações (granularidade: uma operação = uma linha)
 CREATE TABLE IF NOT EXISTS fato_operacoes (
     id_operacao SERIAL PRIMARY KEY,
     id_data INT NOT NULL,
