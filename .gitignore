@@ -5,6 +5,12 @@
 .pbigitignore
 .pbiworkspace
 *.backup
+*.bak
+
+# PostgreSQL
+*.sql.bak
+*.dump
+*.backup
 
 # Python
 __pycache__/
@@ -37,42 +43,35 @@ ENV/
 env.bak/
 venv.bak/
 
-# SQL Server
-*.mdf
-*.ldf
-*.ndf
-
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# IDE
+# IDE & Editors
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 .vs/
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
+Thumbs.db
+desktop.ini
 .env
 .env.local
 .env.*.local
 
-# Logs
+# Temporary
+*.tmp
+*.temp
 *.log
 logs/
+*.cache
 
-# Data (keep as needed)
-# Uncomment to ignore local data
-# data/*.csv
-# data/*.xlsx
+# Large binaries (CSV de origem)
+*.csv.bak
+*.xlsx.bak
 
-# Documentation (keep as needed)
-# docs/*.backup
+# Documentos temporários
+docs/*.backup
+*.docx.bak

@@ -1,333 +1,209 @@
-# Medidas DAX - Dashboard de Performance Logística
+# Medidas DAX - Dashboard Operacional Logístico
 
-## Visão Geral
+## Medidas Básicas de Volume
 
-Este documento descreve exemplos de medidas DAX para implementação no Power BI. Cada medida foi projetada para suportar análises operacionais de performance logística.
-
----
-
-## Medidas de Volume e Receita
-
-### 1. Total de Pedidos
-
+### Total Volume
 ```dax
-Total Pedidos = COUNTA(pedidos[id_pedido])
+Total Volume = SUM(fato_operacoes[volume])
 ```
+Total unidades processadas.
 
-**Uso**: KPI principal - número absoluto de pedidos processados.
-
----
-
-### 2. Receita Total
-
+### Volume Médio
 ```dax
-Receita Total = SUM(pedidos[valor_total])
+Volume Médio = AVERAGE(fato_operacoes[volume])
 ```
-
-**Uso**: Análise de faturamento por período, região, categoria.
+Média de unidades por operação.
 
 ---
 
-### 3. Ticket Médio
+## Medidas de Produtividade
 
+### Items por Minuto
 ```dax
-Ticket Médio = AVERAGEX(pedidos, pedidos[valor_total])
+Items por Minuto = 
+SUM(fato_operacoes[volume]) / 
+SUM(fato_operacoes[tempo_processamento_minutos])
 ```
+Eficiência: unidades/minuto.
 
-**Uso**: Indicador de valor médio por transação.
+### Tempo Médio
+```dax
+Tempo Médio = AVERAGE(fato_operacoes[tempo_processamento_minutos])
+```
+Ciclo médio em minutos.
+
+### Produtividade Operador
+```dax
+Produtividade Operador = 
+VAR VolumeOp = SUM(fato_operacoes[volume])
+VAR TempoOp = SUM(fato_operacoes[tempo_processamento_minutos])
+RETURN
+  IF(TempoOp = 0, 0, DIVIDE(VolumeOp, TempoOp, 0))
+```
+Produtividade por operador selecionado.
 
 ---
 
-### 4. Receita por Região
+## Medidas de Qualidade
 
+### Acurácia Média
 ```dax
-Receita por Região = 
-SUMIF(
-    pedidos,
-    pedidos[cliente_id],
-    clientes[regiao] = SELECTEDVALUE(clientes[regiao])
+Acurácia Média = AVERAGE(fato_operacoes[acuracia_percentual])
+```
+% acertos em operações.
+
+### Divergências Totais
+```dax
+Divergências Totais = 
+COUNTIF(fato_operacoes[divergencia], 1)
+```
+Count de erros detectados.
+
+### Taxa Divergência %
+```dax
+Taxa Divergência = 
+VAR Divergencias = COUNTIF(fato_operacoes[divergencia], 1)
+VAR Total = COUNTA(fato_operacoes[divergencia])
+RETURN
+  IF(Total = 0, 0, DIVIDE(Divergencias, Total, 0) * 100)
+```
+% de operações com erro.
+
+### Status Operação
+```dax
+Status Operação = 
+VAR Completado = COUNTIF(fato_operacoes[status], "Completado")
+VAR Erro = COUNTIF(fato_operacoes[status], "Com_Erro")
+VAR Incompleto = COUNTIF(fato_operacoes[status], "Incompleto")
+RETURN
+  IF(Erro > 0 OR Incompleto > 0, "Com Problemas", "Operacional")
+```
+Indicador semáforo de status.
+
+---
+
+## Medidas de SLA
+
+### SLA Cumprido
+```dax
+SLA Cumprido = 
+COUNTIF(fato_operacoes[sla_cumprido], 1)
+```
+Count operações dentro do prazo.
+
+### SLA %
+```dax
+SLA Percentual = 
+VAR Cumprido = COUNTIF(fato_operacoes[sla_cumprido], 1)
+VAR Total = COUNTA(fato_operacoes[sla_cumprido])
+RETURN
+  IF(Total = 0, 0, DIVIDE(Cumprido, Total, 0) * 100)
+```
+% cumprimento SLA.
+
+### SLA Indicator
+```dax
+SLA Indicator = 
+VAR SLAPct = [SLA Percentual]
+RETURN
+  IF(SLAPct >= 95, "✓ OK", IF(SLAPct >= 90, "⚠ Atenção", "✗ Crítico"))
+```
+Indicador visual SLA.
+
+---
+
+## Medidas de Contexto e Comparação
+
+### Volume vs Período Anterior
+```dax
+Volume MÊS Anterior = 
+CALCULATE(
+  [Total Volume],
+  DATEADD(dim_data[data_completa], -1, MONTH)
 )
 ```
+Volume do mês anterior para trending.
 
-**Uso**: Comparação de desempenho entre regiões.
-
----
-
-## Medidas de Performance Logística
-
-### 5. Taxa de Entrega no Prazo (%)
-
+### Variação %
 ```dax
-Taxa Entrega Prazo = 
-VAR TotalEntregues = 
-    COUNTIF(entregas, entregas[status_entrega] = "Entregue")
-VAR NoPrazo = 
-    COUNTIF(entregas, 
-        (entregas[status_entrega] = "Entregue") && 
-        (entregas[tempo_entrega_dias] <= 3))
+Variação Volume % = 
+VAR VolAtual = [Total Volume]
+VAR VolAnterior = [Volume Mês Anterior]
 RETURN
-    IF(TotalEntregues = 0, 0, DIVIDE(NoPrazo, TotalEntregues, 0) * 100)
+  IF(VolAnterior = 0, 0, DIVIDE(VolAtual - VolAnterior, VolAnterior, 0) * 100)
 ```
+Crescimento/queda % mês a mês.
 
-**Uso**: KPI crítico - avaliar cumprimento de SLA.
-
-**Interpretação**:
-- 100% = Todas entregas dentro do prazo (≤ 3 dias)
-- Meta típica: 95%+
-
----
-
-### 6. Tempo Médio de Entrega (dias)
-
+### Ranking Operador
 ```dax
-Tempo Médio Entrega = 
-AVERAGEX(
-    FILTER(entregas, entregas[status_entrega] = "Entregue"),
-    entregas[tempo_entrega_dias]
+Ranking Operador = 
+RANK(
+  [Items por Minuto],
+  ALL(dim_operador[codigo_operador])
 )
 ```
-
-**Uso**: Benchmark de eficiência logística.
-
----
-
-### 7. Entregas Pendentes
-
-```dax
-Entregas Pendentes = 
-COUNTIF(entregas, entregas[status_entrega] = "Pendente")
-```
-
-**Uso**: Monitoramento de backlog.
+Posição do operador no ranking.
 
 ---
 
-### 8. Entregas Canceladas
+## Medidas Avançadas
 
+### Gargalo por Turno
 ```dax
-Entregas Canceladas = 
-COUNTIF(entregas, entregas[status_entrega] = "Cancelado")
-```
-
-**Uso**: Análise de anomalias e retrabalho.
-
----
-
-### 9. Cumprimento SLA
-
-```dax
-Cumprimento SLA = 
-VAR TaxaPrazo = [Taxa Entrega Prazo]
-VAR SLAMeta = 95 -- 95% é meta padrão
+Gargalo Turno = 
+VAR TempoMedio = [Tempo Médio]
 RETURN
-    IF(TaxaPrazo >= SLAMeta, 
-        "✓ Cumprido", 
-        "✗ Não Cumprido")
+  IF(TempoMedio > 60, "Alto Gargalo",
+    IF(TempoMedio > 40, "Médio Gargalo", "Sem Gargalo"))
 ```
+Diagnóstico de gargalos por turno.
 
-**Uso**: Semáforo visual de performance.
-
----
-
-## Medidas de Estoque
-
-### 10. Produtos Disponíveis
-
+### Operador Crítico
 ```dax
-Produtos Disponíveis = 
-COUNTIF(estoque, estoque[quantidade] > 0)
-```
-
-**Uso**: Monitoramento de disponibilidade de SKUs.
-
----
-
-### 11. Produtos Indisponíveis
-
-```dax
-Produtos Indisponíveis = 
-COUNTIF(estoque, estoque[quantidade] = 0)
-```
-
-**Uso**: Identificar stock-outs críticos.
-
----
-
-### 12. Taxa de Disponibilidade (%)
-
-```dax
-Taxa Disponibilidade = 
-VAR Disponiveis = [Produtos Disponíveis]
-VAR Total = COUNTA(estoque[id_estoque])
+Operador Crítico = 
+VAR Acuracia = [Acurácia Média]
+VAR Produtiv = [Items por Minuto]
+VAR Média Geral = CALCULATE([Acurácia Média], ALL(dim_operador))
 RETURN
-    IF(Total = 0, 0, DIVIDE(Disponiveis, Total, 0) * 100)
+  IF(Acuracia < Média Geral * 0.9, "Atenção", "Ok")
 ```
+Flag operadores abaixo da média.
 
-**Uso**: KPI de saúde geral do inventário.
-
-**Meta típica**: 95%+
-
----
-
-### 13. Estoque Total (unidades)
-
+### Total Operações
 ```dax
-Estoque Total = SUM(estoque[quantidade])
+Total Operações = COUNTA(fato_operacoes[id_operacao])
 ```
+Count total de operações.
 
-**Uso**: Volume agregado em armazém.
-
----
-
-### 14. Estoque Médio por Produto
-
+### Custo Estimado (com estimativa)
 ```dax
-Estoque Médio = 
-AVERAGEX(estoque, estoque[quantidade])
-```
-
-**Uso**: Análise de distribuição de estoque.
-
----
-
-## Medidas de Análise Comparativa
-
-### 15. Índice de Desempenho Regional
-
-```dax
-Índice Desempenho = 
-VAR ReceitaRegiao = [Receita por Região]
-VAR ReceitaMedia = 
-    AVERAGEX(
-        VALUES(clientes[regiao]), 
-        [Receita por Região]
-    )
+Custo Estimado = 
+VAR VolumeTotal = [Total Volume]
+VAR CustoPorItem = 0.50  -- R$ 0,50 por item
 RETURN
-    IF(ReceitaMedia = 0, 0, DIVIDE(ReceitaRegiao, ReceitaMedia, 0))
+  VolumeTotal * CustooPorItem
 ```
-
-**Uso**: Comparar performance de cada região contra a média.
-
-**Interpretação**:
-- > 1.0 = Acima da média
-- = 1.0 = Alinhado com média
-- < 1.0 = Abaixo da média
+Estimativa de custo operacional.
 
 ---
 
-### 16. Variação Receita YoY
+## Como Implementar
 
-```dax
-Receita YoY = 
-VAR RecejaAtual = [Receita Total]
-VAR ReceitaAnoAnt = 
-    CALCULATE(
-        [Receita Total],
-        DATEADD(clientes[data_cadastro], -1, YEAR)
-    )
-RETURN
-    IF(ReceitaAnoAnt = 0, 0, 
-        DIVIDE(RecejaAtual - ReceitaAnoAnt, ReceitaAnoAnt, 0) * 100
-    )
-```
-
-**Uso**: Tendência de crescimento anual.
+1. **Power BI Desktop**: Home → New Measure
+2. **Copiar fórmula DAX** exata
+3. **Nomeación**: Usar nome exato (sem espaços extra)
+4. **Validar**: Verificar sem erros
+5. **Testar**: Arrastar para visual e checar resultado
 
 ---
 
-## Medidas de Análise por Status
+## Melhores Práticas
 
-### 17. Pedidos Confirmados
-
-```dax
-Pedidos Confirmados = 
-COUNTIF(pedidos, pedidos[status] = "Confirmado")
-```
-
----
-
-### 18. Pedidos Cancelados
-
-```dax
-Pedidos Cancelados = 
-COUNTIF(pedidos, pedidos[status] = "Cancelado")
-```
-
----
-
-### 19. Taxa de Cancelamento (%)
-
-```dax
-Taxa Cancelamento = 
-VAR Cancelados = [Pedidos Cancelados]
-VAR Total = [Total Pedidos]
-RETURN
-    IF(Total = 0, 0, DIVIDE(Cancelados, Total, 0) * 100)
-```
-
-**Interpretação**:
-- Baixo (< 5%) = Saudável
-- Moderado (5-10%) = Monitorar
-- Alto (> 10%) = Investigar
-
----
-
-## Guia de Implementação
-
-### Passos no Power BI Desktop
-
-1. **Abrir Power BI Desktop**
-2. **Ir a**: Home → New Measure
-3. **Copiar fórmula DAX** do exemplo
-4. **Nomeação**: Usar nomes descritivos (ex: "Taxa Entrega Prazo")
-5. **Validar**: Verificar ausência de erros de sintaxe
-6. **Testar**: Arrastar medida para card/visual e validar resultado
-7. **Repetir**: Para cada medida desejada
-
-### Melhores Práticas
-
-- **Namespaces**: Agrupar medidas em pastas por tipo
-- **Documentação**: Adicionar comentários com contexto
-- **Performance**: Usar CALCULATE com cuidado em grandes datasets
-- **Validação**: Testar contra queries SQL equivalentes
-
----
-
-## Exemplos de Cards e Visuais
-
-### Card KPI
-
-```
-[Taxa Entrega Prazo]
-Cor: Verde se >= 95%, Vermelho se < 90%
-Formato: 0.00%
-```
-
-### Gráfico de Barras
-
-```
-Eixo X: clientes[regiao]
-Eixo Y: [Receita por Região]
-Legenda: Status de pedidos
-```
-
-### Tabela de Análise
-
-```
-Colunas:
-- clientes[regiao]
-- [Total Pedidos]
-- [Receita Total]
-- [Ticket Médio]
-- [Taxa Entrega Prazo]
-```
-
----
-
-## Notas
-
-- Medidas foram otimizadas para dataset de ~30 clientes (dataset simulado)
-- Em datasets maiores (> 1M linhas), considerar tabelas pré-agregadas
-- DAX Studio pode ser usado para profiling e otimização
-- Todas as medidas usam sintaxe nativa do Power BI (sem extensões)
+✅ Usar CALCULATE para contexto  
+✅ Usar DIVIDE para evitar divisão zero  
+✅ Comentar fórmulas complexas  
+✅ Testar com filtros cruzados  
+✅ Usar variáveis (VAR) para legibilidade  
+❌ Evitar MEASURE dentro de MEASURE  
+❌ Não adicionar lógica complexa em medidas simples  
 

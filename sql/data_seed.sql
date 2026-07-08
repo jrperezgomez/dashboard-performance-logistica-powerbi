@@ -1,159 +1,122 @@
--- Data Seed para o Dashboard de Performance Logística
--- Cenário simulado - Projeto de Portfólio
+-- Data Seed: Dashboard Operacional Logístico
+-- Inserts para simular 500 operaciónes en 90 días
 -- PostgreSQL 12+
--- Author: José Pérez | Data: 2026
 
--- Inserir Clientes
-INSERT INTO clientes (id_cliente, nome_cliente, cidade, regiao, data_cadastro) VALUES
-(1, 'João Silva', 'São Paulo', 'Sudeste', '2025-06-01'),
-(2, 'Maria Santos', 'Rio de Janeiro', 'Sudeste', '2025-07-10'),
-(3, 'Carlos Oliveira', 'Belo Horizonte', 'Sudeste', '2025-05-20'),
-(4, 'Ana Costa', 'Porto Alegre', 'Sul', '2025-08-05'),
-(5, 'Pedro Ferreira', 'Curitiba', 'Sul', '2025-04-12'),
-(6, 'Lucia Gomes', 'Salvador', 'Nordeste', '2025-09-18'),
-(7, 'Roberto Martins', 'Fortaleza', 'Nordeste', '2025-03-22'),
-(8, 'Fernanda Dias', 'Recife', 'Nordeste', '2025-10-08'),
-(9, 'Gabriel Lima', 'Brasília', 'Centro-Oeste', '2025-02-14'),
-(10, 'Isabela Rocha', 'Goiânia', 'Centro-Oeste', '2025-11-30'),
-(11, 'Tomás Barbosa', 'São Paulo', 'Sudeste', '2025-06-11'),
-(12, 'Julia Martins', 'Rio de Janeiro', 'Sudeste', '2025-07-25'),
-(13, 'Lucas Pereira', 'Belo Horizonte', 'Sudeste', '2025-05-05'),
-(14, 'Camila Rodrigues', 'Porto Alegre', 'Sul', '2025-08-19'),
-(15, 'Raphael Silva', 'Curitiba', 'Sul', '2025-04-28'),
-(16, 'Beatriz Costa', 'Salvador', 'Nordeste', '2025-09-03'),
-(17, 'Marcos Oliveira', 'Fortaleza', 'Nordeste', '2025-03-09'),
-(18, 'Patricia Gomes', 'Recife', 'Nordeste', '2025-10-22'),
-(19, 'Diego Mendes', 'Brasília', 'Centro-Oeste', '2025-02-01'),
-(20, 'Vanessa Lima', 'Goiânia', 'Centro-Oeste', '2025-11-14'),
-(21, 'Henrique Cardoso', 'São Paulo', 'Sudeste', '2025-06-23'),
-(22, 'Sofia Rocha', 'Rio de Janeiro', 'Sudeste', '2025-07-08'),
-(23, 'Gustavo Ferreira', 'Belo Horizonte', 'Sudeste', '2025-05-17'),
-(24, 'Elena Dias', 'Porto Alegre', 'Sul', '2025-08-26'),
-(25, 'Bernardo Souza', 'Curitiba', 'Sul', '2025-04-03'),
-(26, 'Amanda Castro', 'Salvador', 'Nordeste', '2025-09-12'),
-(27, 'Vinícius Teixeira', 'Fortaleza', 'Nordeste', '2025-03-30'),
-(28, 'Natália Barbosa', 'Recife', 'Nordeste', '2025-10-11'),
-(29, 'Thiago Moreira', 'Brasília', 'Centro-Oeste', '2025-02-27'),
-(30, 'Larissa Santos', 'Goiânia', 'Centro-Oeste', '2025-11-02')
+-- ============================================
+-- DIMENSIÓN: Datas (90 días: 01/04 a 30/06/2026)
+-- ============================================
+
+INSERT INTO dim_data (data_completa, ano, mes, dia, trimestre, nome_mes, nome_dia_semana, semana_ano)
+SELECT DISTINCT
+    CAST(data_completa AS DATE) as data_completa,
+    EXTRACT(YEAR FROM data_completa)::INT as ano,
+    EXTRACT(MONTH FROM data_completa)::INT as mes,
+    EXTRACT(DAY FROM data_completa)::INT as dia,
+    CASE WHEN EXTRACT(MONTH FROM data_completa) <= 3 THEN 1
+         WHEN EXTRACT(MONTH FROM data_completa) <= 6 THEN 2
+         WHEN EXTRACT(MONTH FROM data_completa) <= 9 THEN 3
+         ELSE 4 END as trimestre,
+    TO_CHAR(data_completa, 'Month') as nome_mes,
+    TO_CHAR(data_completa, 'Day') as nome_dia_semana,
+    EXTRACT(WEEK FROM data_completa)::INT as semana_ano
+FROM generate_series('2026-04-01'::DATE, '2026-06-30'::DATE, '1 day'::INTERVAL) as data_completa
 ON CONFLICT DO NOTHING;
 
--- Inserir Produtos
-INSERT INTO produtos (id_produto, nome_produto, categoria, preco, peso_kg) VALUES
-(1, 'Notebook Dell', 'Eletrônicos', 2500.00, 1.50),
-(2, 'Mouse Logitech', 'Eletrônicos', 150.00, 0.10),
-(3, 'Teclado Mecanico', 'Eletrônicos', 350.00, 0.80),
-(4, 'Monitor LG 24', 'Eletrônicos', 800.00, 5.00),
-(5, 'Impressora HP', 'Eletrônicos', 600.00, 8.00),
-(6, 'Camiseta Basica', 'Vestuário', 45.00, 0.25),
-(7, 'Calça Jeans', 'Vestuário', 120.00, 0.50),
-(8, 'Meia Premium', 'Vestuário', 25.00, 0.05),
-(9, 'Sapato Casual', 'Vestuário', 180.00, 0.60),
-(10, 'Arroz Integral', 'Alimentos', 25.00, 2.00),
-(11, 'Feijão Carioca', 'Alimentos', 18.00, 1.50),
-(12, 'Leite Integral', 'Alimentos', 5.00, 1.00),
-(13, 'Pão Francês', 'Alimentos', 0.50, 0.05),
-(14, 'Leite Condensado', 'Alimentos', 3.50, 0.40),
-(15, 'Manteiga Australiana', 'Alimentos', 32.00, 0.25)
+-- ============================================
+-- DIMENSIÓN: Productos
+-- ============================================
+
+INSERT INTO dim_produto (nome_produto, categoria, peso_kg) VALUES
+('Notebook', 'Eletrônicos', 1.50),
+('Mouse', 'Eletrônicos', 0.10),
+('Camiseta', 'Vestuário', 0.25),
+('Calça', 'Vestuário', 0.50),
+('Arroz', 'Alimentos', 2.00),
+('Feijão', 'Alimentos', 1.50),
+('Sabonete', 'Higiene', 0.10),
+('Detergente', 'Limpeza', 0.50),
+('Cadeira', 'Mobiliário', 5.00),
+('Mesa', 'Mobiliário', 15.00),
+('Papel A4', 'Papelaria', 2.50),
+('Tinta Impressora', 'Eletrônicos', 0.20)
 ON CONFLICT DO NOTHING;
 
--- Inserir Pedidos
-INSERT INTO pedidos (id_pedido, data_pedido, cliente_id, status, valor_total) VALUES
-(1, '2026-06-15', 1, 'Confirmado', 2500.00),
-(2, '2026-06-16', 2, 'Confirmado', 450.00),
-(3, '2026-06-17', 3, 'Confirmado', 350.00),
-(4, '2026-06-18', 4, 'Confirmado', 800.00),
-(5, '2026-06-19', 5, 'Confirmado', 600.00),
-(6, '2026-06-20', 6, 'Confirmado', 450.00),
-(7, '2026-06-21', 7, 'Confirmado', 360.00),
-(8, '2026-06-22', 8, 'Confirmado', 500.00),
-(9, '2026-06-23', 9, 'Confirmado', 540.00),
-(10, '2026-06-24', 10, 'Confirmado', 750.00),
-(11, '2026-06-25', 11, 'Confirmado', 180.00),
-(12, '2026-06-26', 12, 'Confirmado', 1000.00),
-(13, '2026-06-27', 13, 'Confirmado', 500.00),
-(14, '2026-06-28', 14, 'Confirmado', 210.00),
-(15, '2026-06-29', 15, 'Confirmado', 320.00),
-(16, '2026-06-30', 16, 'Confirmado', 2500.00),
-(17, '2026-07-01', 17, 'Confirmado', 300.00),
-(18, '2026-07-02', 18, 'Confirmado', 700.00),
-(19, '2026-07-03', 19, 'Confirmado', 800.00),
-(20, '2026-07-04', 20, 'Pendente', 600.00),
-(21, '2026-07-05', 21, 'Confirmado', 225.00),
-(22, '2026-07-06', 22, 'Cancelado', 0.00),
-(23, '2026-07-07', 23, 'Pendente', 750.00),
-(24, '2026-06-15', 24, 'Confirmado', 540.00),
-(25, '2026-06-16', 25, 'Confirmado', 500.00),
-(26, '2026-06-17', 26, 'Confirmado', 90.00),
-(27, '2026-06-18', 27, 'Confirmado', 500.00),
-(28, '2026-06-19', 28, 'Confirmado', 300.00),
-(29, '2026-06-20', 29, 'Confirmado', 140.00),
-(30, '2026-06-21', 30, 'Confirmado', 160.00)
+-- ============================================
+-- DIMENSIÓN: Operadores (20 operadores)
+-- ============================================
+
+INSERT INTO dim_operador (codigo_operador, nome_operador, experiencia_meses, treinado) VALUES
+('OP001', 'Anderson Silva', 36, TRUE),
+('OP002', 'Beatriz Costa', 24, TRUE),
+('OP003', 'Carlos Mendes', 18, TRUE),
+('OP004', 'Diana Rocha', 12, TRUE),
+('OP005', 'Eduardo Santos', 48, TRUE),
+('OP006', 'Fernanda Oliveira', 8, TRUE),
+('OP007', 'Gabriel Lima', 30, TRUE),
+('OP008', 'Helena Ribeiro', 15, TRUE),
+('OP009', 'Igor Pereira', 6, TRUE),
+('OP010', 'Julia Martins', 42, TRUE),
+('OP011', 'Kevin Alves', 9, TRUE),
+('OP012', 'Larissa Gomes', 27, TRUE),
+('OP013', 'Marcos Ferreira', 20, TRUE),
+('OP014', 'Natalia Souza', 14, TRUE),
+('OP015', 'Otavio Barbosa', 35, TRUE),
+('OP016', 'Patricia Dias', 11, TRUE),
+('OP017', 'Quincy Miranda', 28, TRUE),
+('OP018', 'Rafael Teixeira', 5, FALSE),
+('OP019', 'Sandra Moreira', 38, TRUE),
+('OP020', 'Thiago Carvalho', 16, TRUE)
 ON CONFLICT DO NOTHING;
 
--- Inserir Entregas
-INSERT INTO entregas (id_entrega, id_pedido, data_envio, data_entrega, tempo_entrega_dias, status_entrega) VALUES
-(1, 1, '2026-06-15', '2026-06-18', 3, 'Entregue'),
-(2, 2, '2026-06-16', '2026-06-19', 3, 'Entregue'),
-(3, 3, '2026-06-17', '2026-06-22', 5, 'Entregue'),
-(4, 4, '2026-06-18', '2026-06-21', 3, 'Entregue'),
-(5, 5, '2026-06-19', '2026-06-25', 6, 'Entregue'),
-(6, 6, '2026-06-20', '2026-06-27', 7, 'Entregue'),
-(7, 7, '2026-06-21', '2026-06-29', 8, 'Entregue'),
-(8, 8, '2026-06-22', '2026-07-01', 9, 'Entregue'),
-(9, 9, '2026-06-23', '2026-06-28', 5, 'Entregue'),
-(10, 10, '2026-06-24', '2026-07-02', 8, 'Entregue'),
-(11, 11, '2026-06-25', '2026-06-28', 3, 'Entregue'),
-(12, 12, '2026-06-26', '2026-06-30', 4, 'Entregue'),
-(13, 13, '2026-06-27', '2026-07-03', 6, 'Entregue'),
-(14, 14, '2026-06-28', '2026-07-04', 6, 'Entregue'),
-(15, 15, '2026-06-29', '2026-07-05', 6, 'Entregue'),
-(16, 16, '2026-06-30', '2026-07-06', 6, 'Entregue'),
-(17, 17, '2026-07-01', '2026-07-06', 5, 'Entregue'),
-(18, 18, '2026-07-02', '2026-07-06', 4, 'Pendente'),
-(19, 19, '2026-07-03', NULL, NULL, 'Pendente'),
-(20, 20, NULL, NULL, NULL, 'Pendente'),
-(21, 21, '2026-07-05', NULL, NULL, 'Pendente'),
-(22, 22, NULL, NULL, NULL, 'Cancelado'),
-(23, 23, NULL, NULL, NULL, 'Pendente'),
-(24, 24, '2026-06-15', '2026-06-20', 5, 'Entregue'),
-(25, 25, '2026-06-16', '2026-06-23', 7, 'Entregue'),
-(26, 26, '2026-06-17', '2026-06-24', 7, 'Entregue'),
-(27, 27, '2026-06-18', '2026-06-25', 7, 'Entregue'),
-(28, 28, '2026-06-19', '2026-06-26', 7, 'Entregue'),
-(29, 29, '2026-06-20', '2026-06-27', 7, 'Entregue'),
-(30, 30, '2026-06-21', '2026-06-28', 7, 'Entregue')
+-- ============================================
+-- DIMENSIÓN: Turnos
+-- ============================================
+
+INSERT INTO dim_turno (nome_turno, hora_inicio, hora_fim) VALUES
+('Matutino', '06:00:00', '14:00:00'),
+('Vespertino', '14:00:00', '22:00:00'),
+('Noturno', '22:00:00', '06:00:00')
 ON CONFLICT DO NOTHING;
 
--- Inserir Estoque
-INSERT INTO estoque (id_estoque, id_produto, quantidade, localizacao, data_atualizacao) VALUES
-(1, 1, 45, 'SP-Zona Leste', '2026-07-07'),
-(2, 2, 120, 'RJ-Centro', '2026-07-07'),
-(3, 3, 80, 'MG-Savassi', '2026-07-07'),
-(4, 4, 30, 'RS-Zona Sul', '2026-07-07'),
-(5, 5, 25, 'PR-Centro', '2026-07-07'),
-(6, 6, 200, 'BA-Comercial', '2026-07-07'),
-(7, 7, 150, 'CE-Centro', '2026-07-07'),
-(8, 8, 350, 'PE-Zona Leste', '2026-07-07'),
-(9, 9, 120, 'DF-Centro', '2026-07-07'),
-(10, 10, 500, 'GO-Zona Oeste', '2026-07-07'),
-(11, 11, 300, 'SP-Zona Oeste', '2026-07-07'),
-(12, 12, 800, 'RJ-Zona Norte', '2026-07-07'),
-(13, 13, 2000, 'MG-Centro', '2026-07-07'),
-(14, 14, 200, 'RS-Centro', '2026-07-07'),
-(15, 15, 80, 'PR-Zona Sul', '2026-07-07'),
-(16, 1, 12, 'BA-Centro', '2026-07-07'),
-(17, 2, 95, 'CE-Zona Leste', '2026-07-07'),
-(18, 3, 60, 'PE-Centro', '2026-07-07'),
-(19, 4, 18, 'DF-Zona Sul', '2026-07-07'),
-(20, 5, 22, 'GO-Centro', '2026-07-07'),
-(21, 6, 190, 'SP-Zona Central', '2026-07-07'),
-(22, 7, 140, 'RJ-Zona Leste', '2026-07-07'),
-(23, 8, 340, 'MG-Zona Leste', '2026-07-07'),
-(24, 9, 100, 'RS-Zona Leste', '2026-07-07'),
-(25, 10, 475, 'PR-Centro', '2026-07-07'),
-(26, 11, 280, 'BA-Zona Norte', '2026-07-07'),
-(27, 12, 750, 'CE-Zona Sul', '2026-07-07'),
-(28, 13, 1800, 'PE-Zona Oeste', '2026-07-07'),
-(29, 14, 180, 'DF-Zona Leste', '2026-07-07'),
-(30, 15, 60, 'GO-Zona Leste', '2026-07-07')
+-- ============================================
+-- FATO: Operações (Populate com 500 registros simulados)
+-- ============================================
+
+-- Inserts aleatorios generados desde CSV
+-- Este é um ejemplo - em produção, usar COPY FROM csv
+
+INSERT INTO fato_operacoes (id_data, id_operador, id_turno, id_produto, volume, tempo_processamento_minutos, status, divergencia, acuracia_percentual, sla_cumprido)
+SELECT
+    d.id_data,
+    (ABS(HASHTEXT(CONCAT(d.data_completa, 'OP'))) % 20) + 1 as id_operador,
+    (ABS(HASHTEXT(CONCAT(d.data_completa, 'TURNO'))) % 3) + 1 as id_turno,
+    (ABS(HASHTEXT(CONCAT(d.data_completa, 'PROD'))) % 12) + 1 as id_produto,
+    (ABS(HASHTEXT(CONCAT(d.data_completa, 'VOL'))) % 490) + 10 as volume,
+    (ABS(HASHTEXT(CONCAT(d.data_completa, 'TEMPO'))) % 175) + 5 as tempo_processamento_minutos,
+    CASE WHEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'STATUS'))) % 100) < 85 THEN 'Completado'
+         WHEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'STATUS'))) % 100) < 95 THEN 'Com_Erro'
+         ELSE 'Incompleto' END as status,
+    CASE WHEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'DIV'))) % 100) < 5 THEN 1 ELSE 0 END as divergencia,
+    CASE WHEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'DIV'))) % 100) < 5
+         THEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'ACC'))) % 16) + 75
+         ELSE (ABS(HASHTEXT(CONCAT(d.data_completa, 'ACC'))) % 6) + 95 END as acuracia_percentual,
+    CASE WHEN (ABS(HASHTEXT(CONCAT(d.data_completa, 'SLA'))) % 100) < 90 THEN 1 ELSE 0 END as sla_cumprido
+FROM dim_data d
+WHERE d.data_completa BETWEEN '2026-04-01' AND '2026-06-30'
+LIMIT 500
 ON CONFLICT DO NOTHING;
+
+-- ============================================
+-- VALIDACIÓN POST-INSERT
+-- ============================================
+
+-- Verificar inserts
+SELECT 'dim_data' as tabla, COUNT(*) as registros FROM dim_data
+UNION ALL
+SELECT 'dim_produto', COUNT(*) FROM dim_produto
+UNION ALL
+SELECT 'dim_operador', COUNT(*) FROM dim_operador
+UNION ALL
+SELECT 'dim_turno', COUNT(*) FROM dim_turno
+UNION ALL
+SELECT 'fato_operacoes', COUNT(*) FROM fato_operacoes;

@@ -1,0 +1,501 @@
+﻿data,operador,turno,produto,categoria,volume,tempo_processamento_minutos,status,divergencia,acuracia_percentual,sla_cumprido
+2026-06-25,OP009,Matutino,Notebook,Eletrônicos,438,71,Incompleto,0,97,1
+2026-05-17,OP007,Noturno,Notebook,Alimentos,337,139,Incompleto,0,98,1
+2026-05-10,OP013,Noturno,Mouse,Papelaria,159,17,Incompleto,0,99,1
+2026-04-13,OP007,Vespertino,Feijão,Vestuário,43,77,Com_Erro,0,95,1
+2026-05-22,OP004,Vespertino,Camiseta,Eletrônicos,164,169,Completado,0,99,0
+2026-06-06,OP020,Vespertino,Mouse,Vestuário,359,18,Incompleto,0,96,1
+2026-04-09,OP004,Vespertino,Papel A4,Papelaria,99,127,Completado,0,98,1
+2026-04-28,OP001,Vespertino,Mouse,Alimentos,69,137,Incompleto,0,97,1
+2026-04-15,OP012,Vespertino,Calça,Higiene,463,128,Com_Erro,0,96,1
+2026-04-06,OP003,Vespertino,Calça,Higiene,218,137,Com_Erro,1,87,1
+2026-05-25,OP014,Vespertino,Papel A4,Limpeza,280,172,Completado,0,95,0
+2026-05-19,OP001,Noturno,Camiseta,Limpeza,456,140,Com_Erro,0,98,1
+2026-05-15,OP020,Vespertino,Sabonete,Papelaria,428,63,Completado,0,97,1
+2026-06-23,OP020,Noturno,Cadeira,Vestuário,45,31,Com_Erro,1,83,1
+2026-04-09,OP012,Vespertino,Mesa,Mobiliário,111,153,Com_Erro,0,96,1
+2026-06-12,OP004,Vespertino,Tinta Impressora,Papelaria,495,22,Incompleto,0,97,1
+2026-06-13,OP002,Noturno,Notebook,Mobiliário,102,128,Com_Erro,0,98,1
+2026-06-16,OP018,Noturno,Mesa,Limpeza,49,26,Com_Erro,0,95,1
+2026-04-29,OP004,Vespertino,Cadeira,Mobiliário,51,32,Com_Erro,0,95,1
+2026-05-26,OP016,Matutino,Notebook,Papelaria,109,119,Incompleto,0,97,1
+2026-05-22,OP007,Vespertino,Sabonete,Papelaria,118,8,Com_Erro,0,96,1
+2026-05-07,OP016,Vespertino,Calça,Eletrônicos,233,113,Completado,0,96,1
+2026-05-26,OP006,Matutino,Mesa,Vestuário,27,166,Incompleto,0,99,0
+2026-04-29,OP013,Matutino,Cadeira,Eletrônicos,289,169,Com_Erro,0,99,0
+2026-04-14,OP007,Vespertino,Papel A4,Alimentos,466,40,Completado,0,95,1
+2026-05-01,OP015,Vespertino,Arroz,Mobiliário,213,177,Incompleto,0,95,1
+2026-05-12,OP010,Matutino,Mouse,Papelaria,362,13,Completado,0,98,1
+2026-05-29,OP003,Noturno,Feijão,Higiene,73,178,Com_Erro,0,95,1
+2026-05-31,OP006,Vespertino,Tinta Impressora,Mobiliário,126,96,Com_Erro,0,96,0
+2026-05-24,OP018,Matutino,Notebook,Vestuário,394,89,Completado,0,96,1
+2026-06-25,OP002,Matutino,Detergente,Mobiliário,461,154,Incompleto,0,95,1
+2026-05-23,OP016,Noturno,Arroz,Alimentos,369,147,Incompleto,0,99,0
+2026-06-01,OP011,Matutino,Camiseta,Higiene,56,40,Completado,0,97,1
+2026-06-13,OP007,Vespertino,Mouse,Limpeza,289,110,Com_Erro,0,97,0
+2026-04-13,OP006,Matutino,Cadeira,Limpeza,216,135,Com_Erro,0,99,0
+2026-06-26,OP008,Noturno,Notebook,Mobiliário,350,138,Com_Erro,0,96,1
+2026-06-24,OP020,Vespertino,Mesa,Mobiliário,300,47,Completado,0,98,1
+2026-06-08,OP008,Noturno,Cadeira,Alimentos,189,142,Completado,0,99,1
+2026-06-17,OP008,Matutino,Calça,Mobiliário,270,163,Incompleto,0,97,1
+2026-04-22,OP008,Matutino,Tinta Impressora,Eletrônicos,308,31,Completado,0,95,1
+2026-05-10,OP013,Vespertino,Detergente,Eletrônicos,478,74,Incompleto,0,99,1
+2026-04-13,OP003,Matutino,Tinta Impressora,Higiene,146,129,Completado,0,95,0
+2026-04-13,OP003,Vespertino,Cadeira,Eletrônicos,227,35,Completado,0,96,1
+2026-05-31,OP019,Vespertino,Camiseta,Limpeza,433,171,Com_Erro,0,99,1
+2026-04-16,OP005,Matutino,Camiseta,Papelaria,319,158,Com_Erro,0,96,1
+2026-05-16,OP010,Matutino,Sabonete,Mobiliário,126,171,Com_Erro,0,99,1
+2026-05-15,OP009,Matutino,Feijão,Vestuário,40,153,Completado,0,96,0
+2026-05-13,OP020,Matutino,Mesa,Papelaria,109,100,Completado,0,99,1
+2026-05-30,OP009,Matutino,Feijão,Alimentos,157,129,Com_Erro,0,97,1
+2026-05-04,OP015,Noturno,Notebook,Mobiliário,84,147,Com_Erro,0,95,1
+2026-05-22,OP001,Matutino,Detergente,Higiene,225,135,Completado,0,95,1
+2026-04-17,OP016,Noturno,Camiseta,Eletrônicos,296,100,Com_Erro,0,95,1
+2026-05-27,OP012,Vespertino,Notebook,Vestuário,74,73,Com_Erro,0,95,1
+2026-06-27,OP017,Matutino,Papel A4,Eletrônicos,346,52,Incompleto,0,96,1
+2026-05-22,OP011,Noturno,Tinta Impressora,Papelaria,485,45,Completado,0,96,1
+2026-04-17,OP008,Vespertino,Arroz,Vestuário,192,112,Com_Erro,0,95,1
+2026-06-21,OP017,Noturno,Mouse,Eletrônicos,354,155,Com_Erro,0,98,1
+2026-06-23,OP001,Noturno,Mouse,Alimentos,104,78,Completado,0,98,1
+2026-04-29,OP014,Vespertino,Cadeira,Limpeza,162,162,Completado,0,98,1
+2026-06-13,OP013,Matutino,Mesa,Eletrônicos,429,96,Completado,0,96,1
+2026-04-14,OP009,Vespertino,Notebook,Alimentos,139,78,Completado,0,95,1
+2026-06-19,OP010,Matutino,Cadeira,Limpeza,19,100,Com_Erro,0,95,1
+2026-04-26,OP005,Matutino,Mouse,Vestuário,189,103,Incompleto,0,98,1
+2026-05-11,OP011,Matutino,Arroz,Mobiliário,125,116,Incompleto,0,95,1
+2026-06-08,OP016,Vespertino,Arroz,Mobiliário,96,93,Incompleto,0,97,1
+2026-06-07,OP004,Vespertino,Papel A4,Eletrônicos,98,14,Com_Erro,0,96,1
+2026-04-15,OP001,Noturno,Papel A4,Vestuário,340,59,Incompleto,1,86,1
+2026-06-03,OP009,Vespertino,Calça,Limpeza,495,72,Completado,0,95,1
+2026-06-07,OP016,Matutino,Camiseta,Alimentos,173,84,Incompleto,0,96,1
+2026-05-09,OP013,Vespertino,Mouse,Papelaria,167,150,Com_Erro,0,97,0
+2026-05-12,OP010,Noturno,Arroz,Higiene,426,16,Completado,0,95,1
+2026-06-25,OP006,Matutino,Feijão,Vestuário,238,176,Com_Erro,0,95,0
+2026-05-10,OP001,Noturno,Arroz,Papelaria,435,16,Com_Erro,0,96,1
+2026-06-13,OP007,Vespertino,Sabonete,Limpeza,474,110,Com_Erro,0,98,1
+2026-04-22,OP014,Matutino,Papel A4,Papelaria,444,69,Com_Erro,0,96,0
+2026-05-14,OP001,Noturno,Feijão,Papelaria,257,39,Completado,0,97,1
+2026-04-24,OP010,Noturno,Tinta Impressora,Higiene,477,10,Incompleto,0,97,1
+2026-05-03,OP016,Matutino,Arroz,Limpeza,481,36,Incompleto,0,99,1
+2026-06-21,OP017,Vespertino,Detergente,Limpeza,237,22,Com_Erro,0,97,1
+2026-05-11,OP008,Noturno,Calça,Vestuário,459,77,Com_Erro,0,97,1
+2026-04-17,OP014,Matutino,Papel A4,Higiene,81,45,Completado,0,95,1
+2026-06-09,OP012,Noturno,Feijão,Eletrônicos,166,103,Com_Erro,0,96,1
+2026-06-05,OP007,Noturno,Notebook,Higiene,353,51,Com_Erro,1,80,0
+2026-05-18,OP013,Noturno,Tinta Impressora,Alimentos,280,172,Completado,0,95,1
+2026-05-30,OP013,Matutino,Camiseta,Alimentos,243,21,Incompleto,1,79,1
+2026-04-29,OP019,Noturno,Camiseta,Papelaria,44,98,Incompleto,0,95,1
+2026-06-13,OP001,Matutino,Notebook,Vestuário,202,7,Incompleto,1,89,1
+2026-04-16,OP014,Matutino,Detergente,Alimentos,269,142,Com_Erro,0,96,1
+2026-05-07,OP007,Noturno,Tinta Impressora,Limpeza,183,159,Incompleto,0,97,1
+2026-04-19,OP017,Matutino,Tinta Impressora,Vestuário,213,127,Incompleto,0,96,1
+2026-05-27,OP016,Matutino,Mesa,Mobiliário,208,5,Incompleto,0,99,1
+2026-04-16,OP013,Noturno,Sabonete,Vestuário,208,120,Incompleto,0,97,1
+2026-06-02,OP010,Vespertino,Feijão,Vestuário,288,69,Incompleto,0,95,1
+2026-04-24,OP014,Matutino,Camiseta,Alimentos,292,88,Incompleto,0,96,1
+2026-04-08,OP013,Vespertino,Cadeira,Vestuário,457,56,Completado,0,99,1
+2026-05-08,OP002,Noturno,Detergente,Limpeza,456,81,Com_Erro,0,96,1
+2026-06-14,OP008,Matutino,Notebook,Eletrônicos,112,19,Completado,0,99,0
+2026-04-06,OP008,Noturno,Camiseta,Limpeza,437,85,Com_Erro,0,97,1
+2026-05-23,OP006,Matutino,Cadeira,Mobiliário,484,104,Completado,0,99,1
+2026-06-27,OP017,Matutino,Detergente,Eletrônicos,416,20,Completado,0,96,1
+2026-05-16,OP001,Matutino,Notebook,Mobiliário,340,103,Completado,0,95,1
+2026-05-11,OP016,Noturno,Arroz,Papelaria,236,24,Incompleto,0,99,1
+2026-06-14,OP009,Noturno,Camiseta,Alimentos,140,114,Com_Erro,0,96,1
+2026-06-12,OP016,Matutino,Notebook,Limpeza,453,161,Incompleto,0,99,1
+2026-05-03,OP008,Vespertino,Detergente,Eletrônicos,252,114,Incompleto,0,99,1
+2026-05-15,OP004,Noturno,Mesa,Mobiliário,243,57,Com_Erro,0,98,1
+2026-05-04,OP020,Matutino,Papel A4,Papelaria,233,41,Incompleto,0,95,1
+2026-05-29,OP001,Vespertino,Mouse,Mobiliário,327,28,Incompleto,0,99,1
+2026-06-29,OP006,Noturno,Camiseta,Higiene,73,77,Com_Erro,0,97,1
+2026-04-05,OP020,Vespertino,Cadeira,Papelaria,312,34,Incompleto,0,95,1
+2026-05-13,OP011,Noturno,Tinta Impressora,Vestuário,197,118,Com_Erro,0,96,1
+2026-04-17,OP020,Noturno,Calça,Papelaria,148,18,Com_Erro,0,99,1
+2026-04-22,OP020,Vespertino,Mouse,Alimentos,460,95,Com_Erro,0,96,1
+2026-04-30,OP017,Vespertino,Papel A4,Mobiliário,93,11,Incompleto,0,98,1
+2026-05-27,OP016,Vespertino,Mesa,Eletrônicos,166,159,Com_Erro,0,98,1
+2026-06-24,OP006,Noturno,Detergente,Higiene,123,132,Incompleto,0,98,1
+2026-04-13,OP014,Matutino,Sabonete,Higiene,200,164,Com_Erro,0,99,1
+2026-04-18,OP008,Noturno,Mouse,Mobiliário,90,39,Incompleto,1,78,1
+2026-05-15,OP018,Matutino,Camiseta,Papelaria,273,145,Completado,0,98,1
+2026-05-17,OP014,Noturno,Camiseta,Papelaria,384,92,Incompleto,0,95,0
+2026-04-17,OP002,Vespertino,Mesa,Papelaria,81,104,Incompleto,0,98,1
+2026-06-18,OP004,Matutino,Detergente,Limpeza,108,70,Com_Erro,0,99,1
+2026-06-17,OP017,Matutino,Mouse,Papelaria,492,80,Completado,0,97,1
+2026-05-23,OP014,Matutino,Calça,Limpeza,365,119,Com_Erro,0,96,1
+2026-05-26,OP016,Noturno,Cadeira,Mobiliário,67,56,Com_Erro,0,97,1
+2026-04-07,OP005,Vespertino,Papel A4,Mobiliário,32,106,Completado,0,96,1
+2026-06-07,OP012,Vespertino,Camiseta,Limpeza,474,118,Incompleto,0,97,1
+2026-04-18,OP005,Matutino,Calça,Alimentos,143,59,Incompleto,0,97,1
+2026-05-18,OP013,Noturno,Feijão,Mobiliário,444,111,Incompleto,0,95,1
+2026-04-21,OP001,Matutino,Calça,Vestuário,455,65,Incompleto,0,96,1
+2026-04-24,OP001,Vespertino,Sabonete,Limpeza,361,59,Incompleto,0,96,0
+2026-04-14,OP001,Noturno,Arroz,Higiene,260,138,Com_Erro,0,96,1
+2026-06-17,OP001,Matutino,Mouse,Vestuário,12,75,Com_Erro,0,96,1
+2026-06-24,OP008,Noturno,Tinta Impressora,Limpeza,173,161,Com_Erro,0,99,0
+2026-04-23,OP018,Matutino,Detergente,Alimentos,265,151,Incompleto,0,99,1
+2026-05-23,OP004,Vespertino,Arroz,Vestuário,316,58,Com_Erro,0,95,1
+2026-06-19,OP002,Vespertino,Tinta Impressora,Papelaria,293,79,Com_Erro,0,95,1
+2026-06-20,OP015,Vespertino,Mesa,Eletrônicos,197,159,Incompleto,0,97,1
+2026-05-29,OP016,Vespertino,Cadeira,Eletrônicos,475,51,Completado,0,96,1
+2026-05-21,OP001,Noturno,Cadeira,Mobiliário,285,50,Com_Erro,0,95,1
+2026-06-15,OP006,Vespertino,Calça,Mobiliário,424,166,Com_Erro,0,98,1
+2026-05-23,OP010,Noturno,Tinta Impressora,Vestuário,439,88,Completado,0,96,1
+2026-04-03,OP004,Vespertino,Notebook,Eletrônicos,319,61,Com_Erro,0,95,1
+2026-05-09,OP019,Matutino,Papel A4,Alimentos,331,78,Completado,0,97,1
+2026-05-04,OP009,Vespertino,Feijão,Papelaria,325,71,Completado,0,98,1
+2026-05-06,OP005,Vespertino,Camiseta,Limpeza,404,55,Completado,0,99,1
+2026-05-11,OP001,Noturno,Sabonete,Papelaria,21,148,Incompleto,0,96,0
+2026-06-23,OP017,Noturno,Mouse,Higiene,87,123,Completado,0,95,1
+2026-05-21,OP011,Matutino,Arroz,Papelaria,240,112,Completado,0,95,1
+2026-05-02,OP020,Vespertino,Sabonete,Eletrônicos,70,67,Completado,0,96,1
+2026-05-06,OP007,Vespertino,Detergente,Limpeza,349,28,Com_Erro,0,95,1
+2026-06-23,OP010,Vespertino,Sabonete,Papelaria,330,66,Completado,0,97,0
+2026-06-10,OP010,Noturno,Notebook,Eletrônicos,323,102,Incompleto,0,98,1
+2026-06-26,OP003,Noturno,Mesa,Alimentos,434,166,Incompleto,0,98,0
+2026-05-02,OP002,Matutino,Detergente,Mobiliário,278,128,Incompleto,0,95,1
+2026-05-12,OP011,Matutino,Sabonete,Higiene,325,91,Completado,0,98,1
+2026-06-06,OP011,Matutino,Calça,Eletrônicos,415,90,Completado,0,96,1
+2026-06-12,OP003,Noturno,Calça,Eletrônicos,11,6,Completado,0,97,1
+2026-06-19,OP014,Matutino,Camiseta,Eletrônicos,181,53,Com_Erro,0,96,1
+2026-06-28,OP007,Vespertino,Sabonete,Limpeza,138,158,Com_Erro,0,98,1
+2026-04-29,OP015,Matutino,Feijão,Higiene,166,90,Completado,0,99,0
+2026-05-30,OP013,Vespertino,Camiseta,Papelaria,299,28,Incompleto,0,96,1
+2026-05-10,OP003,Vespertino,Mesa,Limpeza,253,135,Completado,0,97,1
+2026-04-16,OP008,Vespertino,Sabonete,Papelaria,447,172,Incompleto,0,99,1
+2026-04-04,OP014,Noturno,Detergente,Eletrônicos,44,54,Completado,1,87,1
+2026-05-11,OP006,Noturno,Tinta Impressora,Eletrônicos,266,178,Completado,0,97,1
+2026-05-01,OP009,Matutino,Camiseta,Alimentos,28,47,Incompleto,1,80,1
+2026-06-28,OP002,Noturno,Mesa,Higiene,450,122,Incompleto,0,96,1
+2026-06-11,OP019,Matutino,Feijão,Eletrônicos,486,80,Incompleto,0,97,1
+2026-05-17,OP007,Vespertino,Camiseta,Papelaria,437,47,Incompleto,1,86,1
+2026-05-08,OP007,Noturno,Calça,Vestuário,374,21,Com_Erro,0,97,1
+2026-06-13,OP014,Matutino,Camiseta,Vestuário,291,52,Com_Erro,0,98,1
+2026-04-09,OP012,Vespertino,Papel A4,Vestuário,363,145,Com_Erro,0,96,1
+2026-06-07,OP010,Noturno,Calça,Eletrônicos,346,125,Incompleto,0,95,1
+2026-05-05,OP010,Noturno,Tinta Impressora,Higiene,349,122,Incompleto,0,98,1
+2026-06-25,OP005,Matutino,Mouse,Limpeza,416,70,Incompleto,0,96,1
+2026-04-05,OP019,Noturno,Notebook,Alimentos,135,107,Incompleto,0,98,1
+2026-06-02,OP004,Matutino,Calça,Alimentos,377,23,Incompleto,0,99,1
+2026-05-06,OP011,Noturno,Mesa,Mobiliário,293,155,Com_Erro,0,97,0
+2026-05-25,OP010,Noturno,Cadeira,Papelaria,320,77,Completado,0,96,1
+2026-05-28,OP011,Matutino,Cadeira,Alimentos,281,113,Incompleto,0,95,0
+2026-06-21,OP011,Matutino,Calça,Higiene,232,6,Completado,0,97,1
+2026-06-02,OP012,Noturno,Arroz,Limpeza,47,87,Com_Erro,0,96,1
+2026-06-05,OP019,Matutino,Arroz,Higiene,424,58,Incompleto,0,98,0
+2026-06-02,OP012,Vespertino,Notebook,Mobiliário,187,173,Completado,0,97,1
+2026-06-10,OP017,Vespertino,Calça,Higiene,96,100,Completado,0,99,1
+2026-04-06,OP016,Matutino,Detergente,Alimentos,29,33,Incompleto,1,77,1
+2026-06-06,OP018,Matutino,Detergente,Eletrônicos,13,24,Com_Erro,0,98,1
+2026-05-25,OP003,Vespertino,Cadeira,Eletrônicos,298,27,Completado,0,97,1
+2026-04-07,OP010,Vespertino,Detergente,Limpeza,368,166,Incompleto,0,97,0
+2026-05-25,OP002,Noturno,Mouse,Higiene,262,99,Completado,0,98,0
+2026-05-31,OP004,Matutino,Sabonete,Eletrônicos,174,105,Com_Erro,0,95,1
+2026-05-23,OP017,Vespertino,Camiseta,Limpeza,183,71,Incompleto,0,99,0
+2026-05-28,OP011,Matutino,Mouse,Alimentos,216,112,Incompleto,0,99,1
+2026-04-13,OP017,Vespertino,Detergente,Alimentos,95,107,Com_Erro,0,98,0
+2026-06-23,OP010,Noturno,Detergente,Papelaria,152,37,Incompleto,0,97,1
+2026-06-01,OP011,Vespertino,Mouse,Mobiliário,117,31,Incompleto,1,76,1
+2026-04-13,OP014,Noturno,Tinta Impressora,Eletrônicos,378,41,Completado,0,97,1
+2026-06-03,OP012,Noturno,Mouse,Limpeza,382,61,Com_Erro,0,99,1
+2026-04-02,OP003,Noturno,Papel A4,Higiene,14,68,Completado,0,98,1
+2026-04-16,OP008,Matutino,Sabonete,Eletrônicos,184,80,Com_Erro,0,99,1
+2026-05-02,OP017,Matutino,Detergente,Papelaria,37,73,Com_Erro,0,99,1
+2026-04-26,OP014,Noturno,Calça,Vestuário,456,39,Incompleto,0,95,1
+2026-06-16,OP009,Vespertino,Notebook,Alimentos,107,174,Completado,0,95,0
+2026-05-06,OP016,Matutino,Papel A4,Higiene,189,59,Incompleto,0,95,0
+2026-05-07,OP002,Vespertino,Calça,Limpeza,52,96,Com_Erro,0,96,1
+2026-05-29,OP020,Vespertino,Calça,Limpeza,23,38,Incompleto,0,96,1
+2026-04-27,OP006,Noturno,Detergente,Vestuário,31,150,Com_Erro,0,97,1
+2026-06-20,OP001,Vespertino,Detergente,Mobiliário,441,159,Com_Erro,0,95,1
+2026-06-24,OP003,Matutino,Calça,Eletrônicos,30,54,Incompleto,1,87,1
+2026-06-14,OP016,Matutino,Mouse,Limpeza,231,88,Com_Erro,0,98,0
+2026-04-13,OP002,Vespertino,Sabonete,Vestuário,226,59,Incompleto,0,95,1
+2026-06-03,OP007,Noturno,Detergente,Vestuário,364,143,Completado,0,97,1
+2026-04-22,OP004,Vespertino,Notebook,Limpeza,396,79,Completado,0,97,1
+2026-06-25,OP020,Noturno,Mouse,Limpeza,246,152,Com_Erro,0,95,1
+2026-04-30,OP002,Noturno,Papel A4,Mobiliário,423,136,Incompleto,0,99,1
+2026-05-13,OP017,Vespertino,Notebook,Higiene,201,96,Com_Erro,0,97,1
+2026-06-20,OP008,Noturno,Camiseta,Vestuário,306,58,Completado,0,96,1
+2026-05-30,OP018,Vespertino,Calça,Limpeza,440,107,Com_Erro,0,99,0
+2026-05-08,OP011,Matutino,Feijão,Eletrônicos,205,83,Incompleto,0,97,1
+2026-04-24,OP004,Vespertino,Cadeira,Papelaria,334,30,Com_Erro,0,96,1
+2026-06-22,OP004,Vespertino,Sabonete,Vestuário,50,117,Incompleto,0,97,1
+2026-06-23,OP020,Matutino,Mouse,Eletrônicos,71,163,Incompleto,0,96,1
+2026-05-14,OP012,Matutino,Arroz,Papelaria,105,166,Completado,0,98,1
+2026-04-08,OP012,Noturno,Calça,Limpeza,411,69,Completado,0,96,1
+2026-04-06,OP006,Vespertino,Sabonete,Higiene,258,9,Com_Erro,0,97,0
+2026-06-20,OP015,Noturno,Cadeira,Papelaria,361,83,Incompleto,1,75,1
+2026-04-19,OP018,Noturno,Cadeira,Vestuário,405,20,Com_Erro,0,96,1
+2026-06-10,OP011,Matutino,Cadeira,Vestuário,313,77,Completado,0,96,1
+2026-04-10,OP015,Matutino,Feijão,Limpeza,74,118,Incompleto,0,96,1
+2026-05-16,OP002,Noturno,Arroz,Papelaria,414,42,Com_Erro,0,99,1
+2026-04-14,OP019,Vespertino,Feijão,Mobiliário,17,150,Com_Erro,0,95,1
+2026-06-28,OP016,Noturno,Mouse,Papelaria,183,172,Incompleto,0,95,1
+2026-04-11,OP001,Noturno,Cadeira,Limpeza,114,108,Incompleto,0,96,1
+2026-05-06,OP012,Matutino,Detergente,Eletrônicos,341,116,Incompleto,0,97,1
+2026-04-18,OP002,Matutino,Feijão,Eletrônicos,336,155,Com_Erro,0,95,1
+2026-06-03,OP017,Vespertino,Notebook,Papelaria,152,113,Incompleto,0,98,0
+2026-06-04,OP008,Vespertino,Notebook,Higiene,371,54,Completado,0,96,0
+2026-05-20,OP017,Noturno,Cadeira,Alimentos,373,166,Completado,0,96,1
+2026-06-04,OP017,Vespertino,Cadeira,Mobiliário,335,65,Completado,0,98,0
+2026-04-19,OP008,Noturno,Papel A4,Higiene,312,26,Completado,0,96,1
+2026-06-06,OP006,Vespertino,Detergente,Papelaria,290,158,Incompleto,0,98,1
+2026-05-21,OP013,Vespertino,Calça,Eletrônicos,494,112,Incompleto,0,96,1
+2026-05-29,OP013,Vespertino,Mouse,Mobiliário,448,58,Incompleto,0,96,0
+2026-04-27,OP003,Matutino,Mesa,Vestuário,39,140,Com_Erro,1,89,1
+2026-05-12,OP017,Matutino,Cadeira,Eletrônicos,152,28,Com_Erro,1,84,1
+2026-05-10,OP013,Noturno,Papel A4,Limpeza,222,176,Com_Erro,0,99,1
+2026-05-27,OP008,Vespertino,Mouse,Papelaria,112,102,Completado,0,96,1
+2026-05-09,OP004,Noturno,Mouse,Mobiliário,90,7,Incompleto,0,96,1
+2026-04-17,OP014,Vespertino,Arroz,Vestuário,107,64,Com_Erro,0,96,1
+2026-04-05,OP004,Vespertino,Papel A4,Limpeza,76,167,Completado,0,97,1
+2026-04-10,OP004,Noturno,Mouse,Higiene,155,147,Com_Erro,0,99,1
+2026-04-28,OP004,Noturno,Papel A4,Vestuário,432,67,Incompleto,0,99,1
+2026-04-15,OP003,Vespertino,Detergente,Eletrônicos,155,158,Incompleto,0,96,0
+2026-05-05,OP012,Vespertino,Detergente,Limpeza,40,12,Com_Erro,0,97,1
+2026-06-25,OP018,Vespertino,Detergente,Mobiliário,124,16,Incompleto,0,98,1
+2026-04-04,OP001,Vespertino,Notebook,Eletrônicos,350,95,Incompleto,0,98,1
+2026-05-07,OP016,Matutino,Arroz,Mobiliário,115,56,Incompleto,0,95,1
+2026-06-03,OP004,Noturno,Papel A4,Limpeza,326,117,Incompleto,0,95,1
+2026-05-15,OP011,Vespertino,Sabonete,Papelaria,490,65,Completado,0,97,1
+2026-04-17,OP010,Noturno,Papel A4,Limpeza,421,153,Com_Erro,0,97,1
+2026-05-08,OP007,Vespertino,Sabonete,Limpeza,420,157,Completado,1,79,1
+2026-04-16,OP006,Noturno,Sabonete,Alimentos,353,59,Com_Erro,1,76,1
+2026-06-27,OP020,Matutino,Calça,Mobiliário,376,145,Completado,1,83,1
+2026-06-07,OP003,Matutino,Notebook,Limpeza,236,94,Completado,0,97,1
+2026-05-18,OP006,Vespertino,Detergente,Mobiliário,172,31,Completado,0,97,1
+2026-04-30,OP007,Vespertino,Detergente,Vestuário,261,26,Completado,1,79,1
+2026-05-14,OP011,Vespertino,Notebook,Vestuário,314,153,Incompleto,0,95,1
+2026-05-19,OP010,Noturno,Feijão,Limpeza,85,87,Incompleto,0,96,1
+2026-04-07,OP016,Noturno,Papel A4,Papelaria,400,179,Completado,0,97,1
+2026-05-11,OP016,Noturno,Feijão,Alimentos,138,97,Completado,0,98,1
+2026-06-07,OP017,Noturno,Camiseta,Vestuário,28,174,Incompleto,0,96,1
+2026-04-30,OP010,Noturno,Mouse,Alimentos,369,14,Incompleto,0,96,1
+2026-05-06,OP001,Matutino,Camiseta,Limpeza,364,42,Com_Erro,0,95,1
+2026-05-14,OP001,Matutino,Detergente,Papelaria,286,172,Completado,0,96,1
+2026-06-08,OP010,Vespertino,Notebook,Limpeza,94,144,Completado,0,95,1
+2026-05-29,OP009,Noturno,Cadeira,Eletrônicos,426,47,Com_Erro,0,98,1
+2026-06-22,OP020,Noturno,Mouse,Alimentos,48,90,Incompleto,0,97,1
+2026-05-24,OP006,Noturno,Cadeira,Vestuário,328,11,Com_Erro,0,97,1
+2026-04-27,OP008,Vespertino,Sabonete,Eletrônicos,444,23,Incompleto,0,97,1
+2026-04-12,OP012,Vespertino,Cadeira,Mobiliário,46,130,Incompleto,0,97,1
+2026-06-21,OP017,Noturno,Sabonete,Alimentos,92,109,Com_Erro,0,95,1
+2026-05-23,OP014,Vespertino,Notebook,Mobiliário,255,110,Incompleto,0,95,1
+2026-05-10,OP003,Matutino,Papel A4,Mobiliário,468,173,Incompleto,0,99,1
+2026-05-22,OP010,Noturno,Camiseta,Alimentos,182,169,Completado,0,96,1
+2026-04-05,OP020,Noturno,Tinta Impressora,Alimentos,496,42,Completado,0,99,1
+2026-06-03,OP008,Vespertino,Mesa,Vestuário,136,120,Com_Erro,0,96,1
+2026-06-11,OP003,Noturno,Mesa,Papelaria,161,48,Incompleto,0,96,0
+2026-05-05,OP002,Matutino,Feijão,Papelaria,492,174,Com_Erro,0,95,1
+2026-04-03,OP016,Vespertino,Tinta Impressora,Mobiliário,272,124,Com_Erro,0,99,1
+2026-06-21,OP004,Vespertino,Tinta Impressora,Limpeza,117,163,Incompleto,0,97,1
+2026-06-12,OP020,Vespertino,Papel A4,Eletrônicos,389,123,Com_Erro,0,97,1
+2026-06-22,OP002,Matutino,Notebook,Higiene,189,130,Completado,0,96,1
+2026-05-21,OP004,Noturno,Papel A4,Alimentos,20,136,Incompleto,0,95,1
+2026-06-17,OP020,Vespertino,Papel A4,Vestuário,349,163,Incompleto,0,95,1
+2026-06-17,OP006,Vespertino,Arroz,Limpeza,93,99,Completado,0,99,0
+2026-06-09,OP009,Matutino,Feijão,Eletrônicos,432,119,Incompleto,0,97,0
+2026-05-28,OP005,Matutino,Mesa,Vestuário,258,8,Completado,0,98,0
+2026-04-19,OP007,Noturno,Arroz,Mobiliário,322,106,Completado,0,96,1
+2026-06-20,OP005,Noturno,Mesa,Papelaria,108,12,Completado,0,99,1
+2026-06-23,OP013,Matutino,Camiseta,Alimentos,184,10,Completado,0,95,1
+2026-06-12,OP005,Noturno,Cadeira,Alimentos,229,7,Completado,0,98,1
+2026-04-23,OP007,Noturno,Papel A4,Vestuário,373,148,Completado,0,99,0
+2026-05-05,OP008,Matutino,Tinta Impressora,Limpeza,214,44,Completado,0,98,1
+2026-05-21,OP009,Noturno,Arroz,Papelaria,262,109,Completado,0,95,1
+2026-04-22,OP008,Noturno,Notebook,Limpeza,235,56,Completado,0,98,1
+2026-06-13,OP017,Vespertino,Camiseta,Vestuário,229,109,Completado,0,99,1
+2026-04-04,OP016,Vespertino,Tinta Impressora,Alimentos,174,58,Com_Erro,0,97,0
+2026-04-25,OP003,Noturno,Feijão,Limpeza,195,139,Incompleto,0,96,1
+2026-04-14,OP012,Noturno,Mouse,Alimentos,169,30,Incompleto,0,96,1
+2026-04-21,OP007,Matutino,Detergente,Eletrônicos,250,172,Incompleto,0,98,0
+2026-06-17,OP012,Vespertino,Detergente,Limpeza,496,43,Completado,0,97,1
+2026-05-25,OP013,Noturno,Detergente,Limpeza,96,176,Com_Erro,0,95,1
+2026-04-14,OP019,Vespertino,Arroz,Alimentos,382,53,Incompleto,0,97,1
+2026-04-20,OP015,Vespertino,Detergente,Papelaria,333,32,Com_Erro,0,96,1
+2026-05-15,OP015,Vespertino,Mouse,Vestuário,421,141,Incompleto,0,96,1
+2026-04-15,OP009,Vespertino,Arroz,Eletrônicos,313,85,Completado,0,95,1
+2026-06-13,OP009,Matutino,Mesa,Eletrônicos,265,61,Completado,0,99,1
+2026-05-21,OP009,Noturno,Mouse,Mobiliário,325,81,Completado,0,96,1
+2026-05-05,OP012,Noturno,Sabonete,Alimentos,161,98,Completado,0,96,1
+2026-04-26,OP019,Matutino,Tinta Impressora,Eletrônicos,34,50,Incompleto,0,96,1
+2026-06-08,OP018,Matutino,Detergente,Alimentos,236,148,Com_Erro,0,97,1
+2026-04-26,OP001,Vespertino,Feijão,Vestuário,474,7,Incompleto,0,99,1
+2026-04-03,OP003,Noturno,Notebook,Limpeza,333,72,Incompleto,0,96,1
+2026-05-19,OP017,Matutino,Camiseta,Vestuário,346,18,Completado,0,96,0
+2026-04-24,OP013,Matutino,Mesa,Limpeza,296,59,Com_Erro,0,96,0
+2026-05-25,OP017,Noturno,Notebook,Higiene,202,32,Completado,0,98,1
+2026-04-04,OP010,Noturno,Calça,Eletrônicos,384,61,Incompleto,0,96,1
+2026-04-07,OP018,Matutino,Sabonete,Alimentos,433,145,Com_Erro,0,99,1
+2026-05-25,OP005,Matutino,Detergente,Vestuário,309,124,Completado,0,95,1
+2026-05-12,OP012,Noturno,Cadeira,Mobiliário,166,100,Com_Erro,0,98,1
+2026-06-07,OP016,Matutino,Cadeira,Alimentos,430,56,Com_Erro,0,98,1
+2026-04-17,OP018,Vespertino,Notebook,Mobiliário,96,129,Completado,0,95,1
+2026-06-19,OP009,Vespertino,Cadeira,Mobiliário,88,89,Incompleto,0,97,1
+2026-04-06,OP010,Vespertino,Mouse,Eletrônicos,461,149,Incompleto,0,98,1
+2026-05-27,OP009,Noturno,Papel A4,Vestuário,146,69,Com_Erro,0,99,1
+2026-04-08,OP018,Noturno,Tinta Impressora,Mobiliário,71,28,Incompleto,0,98,1
+2026-06-28,OP017,Matutino,Tinta Impressora,Alimentos,16,143,Completado,0,95,1
+2026-04-28,OP016,Matutino,Feijão,Papelaria,149,40,Com_Erro,0,99,1
+2026-05-23,OP008,Vespertino,Calça,Limpeza,476,127,Com_Erro,1,76,1
+2026-04-24,OP009,Noturno,Sabonete,Vestuário,184,67,Incompleto,0,95,1
+2026-04-07,OP012,Noturno,Notebook,Higiene,337,153,Incompleto,0,97,1
+2026-06-08,OP005,Noturno,Feijão,Higiene,346,151,Com_Erro,0,95,0
+2026-05-17,OP011,Noturno,Camiseta,Papelaria,367,152,Completado,0,98,1
+2026-04-22,OP007,Matutino,Cadeira,Limpeza,457,10,Incompleto,0,95,1
+2026-06-15,OP014,Noturno,Papel A4,Limpeza,439,122,Incompleto,0,98,1
+2026-04-15,OP001,Vespertino,Notebook,Papelaria,219,25,Incompleto,0,96,1
+2026-05-23,OP001,Vespertino,Tinta Impressora,Higiene,16,167,Com_Erro,0,98,1
+2026-04-29,OP014,Matutino,Cadeira,Vestuário,428,174,Com_Erro,0,98,1
+2026-06-28,OP003,Matutino,Mesa,Vestuário,425,110,Com_Erro,0,97,0
+2026-04-04,OP002,Noturno,Calça,Vestuário,472,119,Completado,0,95,1
+2026-05-08,OP015,Noturno,Mesa,Mobiliário,363,50,Incompleto,1,87,1
+2026-04-14,OP001,Matutino,Cadeira,Limpeza,120,18,Incompleto,0,96,1
+2026-05-01,OP013,Matutino,Sabonete,Limpeza,294,9,Incompleto,0,97,1
+2026-05-17,OP015,Matutino,Notebook,Limpeza,24,159,Com_Erro,0,97,1
+2026-04-03,OP019,Noturno,Cadeira,Papelaria,108,80,Incompleto,0,96,1
+2026-04-18,OP008,Matutino,Calça,Mobiliário,96,124,Incompleto,0,97,1
+2026-06-20,OP010,Vespertino,Camiseta,Vestuário,116,13,Incompleto,0,98,1
+2026-04-19,OP013,Matutino,Detergente,Mobiliário,439,148,Com_Erro,0,99,0
+2026-05-04,OP011,Noturno,Calça,Limpeza,375,128,Incompleto,0,96,1
+2026-05-11,OP001,Matutino,Feijão,Limpeza,486,42,Incompleto,0,98,1
+2026-05-11,OP004,Vespertino,Feijão,Higiene,288,146,Completado,0,96,1
+2026-06-23,OP003,Noturno,Cadeira,Alimentos,476,57,Completado,0,95,1
+2026-05-25,OP004,Matutino,Mouse,Higiene,228,153,Completado,0,96,1
+2026-06-27,OP002,Noturno,Detergente,Eletrônicos,153,29,Incompleto,0,98,1
+2026-06-09,OP002,Matutino,Notebook,Limpeza,123,50,Com_Erro,0,99,1
+2026-04-08,OP012,Matutino,Mesa,Limpeza,206,67,Completado,0,99,1
+2026-06-07,OP003,Noturno,Detergente,Higiene,165,6,Completado,0,97,1
+2026-04-19,OP009,Noturno,Cadeira,Limpeza,204,112,Completado,0,95,1
+2026-05-28,OP001,Matutino,Mouse,Mobiliário,237,133,Com_Erro,0,97,1
+2026-05-13,OP008,Noturno,Arroz,Higiene,290,170,Com_Erro,0,95,0
+2026-05-18,OP008,Noturno,Calça,Limpeza,369,173,Com_Erro,0,95,1
+2026-05-19,OP011,Noturno,Mesa,Limpeza,121,100,Com_Erro,0,99,1
+2026-05-27,OP019,Vespertino,Notebook,Higiene,20,12,Completado,0,99,1
+2026-06-03,OP010,Noturno,Sabonete,Eletrônicos,96,5,Com_Erro,0,96,1
+2026-04-27,OP017,Vespertino,Mesa,Mobiliário,380,130,Completado,0,98,0
+2026-05-14,OP016,Noturno,Cadeira,Papelaria,361,169,Com_Erro,0,99,1
+2026-05-07,OP017,Vespertino,Mesa,Mobiliário,353,69,Com_Erro,0,95,1
+2026-04-09,OP013,Noturno,Camiseta,Vestuário,115,55,Com_Erro,0,96,1
+2026-06-04,OP001,Noturno,Detergente,Eletrônicos,254,54,Com_Erro,0,95,1
+2026-04-08,OP009,Vespertino,Tinta Impressora,Limpeza,478,7,Incompleto,0,99,0
+2026-06-05,OP014,Matutino,Feijão,Eletrônicos,260,132,Completado,0,99,0
+2026-06-27,OP002,Vespertino,Cadeira,Papelaria,61,157,Completado,0,98,1
+2026-05-15,OP012,Vespertino,Cadeira,Limpeza,130,63,Com_Erro,0,99,1
+2026-06-12,OP006,Matutino,Feijão,Mobiliário,14,140,Incompleto,0,97,1
+2026-04-12,OP009,Vespertino,Mouse,Eletrônicos,139,163,Incompleto,0,98,1
+2026-04-12,OP004,Noturno,Tinta Impressora,Higiene,385,89,Incompleto,0,97,1
+2026-05-10,OP006,Matutino,Papel A4,Higiene,313,155,Com_Erro,0,98,1
+2026-06-08,OP009,Noturno,Detergente,Eletrônicos,84,16,Com_Erro,0,98,1
+2026-05-25,OP003,Matutino,Mesa,Eletrônicos,52,6,Com_Erro,0,95,1
+2026-04-08,OP020,Matutino,Sabonete,Eletrônicos,213,55,Incompleto,0,97,1
+2026-06-24,OP009,Matutino,Papel A4,Mobiliário,77,62,Incompleto,0,95,1
+2026-05-31,OP014,Noturno,Cadeira,Limpeza,416,140,Completado,0,97,1
+2026-05-21,OP007,Noturno,Detergente,Mobiliário,318,119,Completado,0,98,1
+2026-04-05,OP005,Noturno,Notebook,Mobiliário,112,157,Completado,0,95,1
+2026-06-05,OP007,Vespertino,Notebook,Eletrônicos,347,85,Completado,0,98,1
+2026-06-08,OP018,Noturno,Notebook,Mobiliário,281,127,Completado,0,97,1
+2026-05-06,OP013,Noturno,Papel A4,Mobiliário,381,104,Com_Erro,0,95,1
+2026-05-05,OP013,Vespertino,Feijão,Vestuário,281,173,Incompleto,0,96,1
+2026-06-23,OP009,Noturno,Arroz,Papelaria,75,60,Com_Erro,0,96,1
+2026-04-15,OP019,Noturno,Arroz,Alimentos,397,128,Com_Erro,0,99,1
+2026-06-03,OP010,Vespertino,Mesa,Eletrônicos,54,30,Completado,1,77,1
+2026-06-11,OP015,Matutino,Notebook,Papelaria,217,80,Completado,0,99,1
+2026-06-04,OP009,Noturno,Notebook,Alimentos,114,35,Completado,0,95,1
+2026-06-21,OP015,Vespertino,Calça,Limpeza,159,44,Completado,0,96,1
+2026-06-14,OP003,Matutino,Feijão,Vestuário,382,53,Completado,0,98,1
+2026-04-02,OP016,Noturno,Sabonete,Alimentos,28,168,Completado,1,82,1
+2026-04-13,OP016,Vespertino,Sabonete,Limpeza,93,26,Incompleto,0,95,1
+2026-04-21,OP013,Vespertino,Papel A4,Eletrônicos,380,77,Incompleto,0,95,1
+2026-06-15,OP015,Vespertino,Papel A4,Higiene,398,37,Completado,0,96,0
+2026-05-28,OP001,Vespertino,Tinta Impressora,Higiene,131,24,Completado,1,83,1
+2026-05-31,OP011,Matutino,Feijão,Mobiliário,73,35,Com_Erro,0,95,1
+2026-04-10,OP019,Noturno,Papel A4,Papelaria,144,63,Incompleto,0,95,1
+2026-04-22,OP020,Vespertino,Calça,Higiene,403,33,Com_Erro,0,95,1
+2026-06-13,OP002,Matutino,Mouse,Alimentos,189,14,Completado,0,95,0
+2026-05-26,OP019,Vespertino,Notebook,Mobiliário,178,151,Incompleto,0,98,1
+2026-05-29,OP006,Matutino,Mesa,Vestuário,423,70,Com_Erro,0,98,1
+2026-05-27,OP003,Noturno,Detergente,Mobiliário,87,174,Incompleto,0,99,0
+2026-04-26,OP008,Noturno,Feijão,Vestuário,373,148,Incompleto,0,99,1
+2026-06-26,OP009,Noturno,Papel A4,Eletrônicos,296,42,Incompleto,0,96,1
+2026-06-06,OP006,Vespertino,Calça,Eletrônicos,380,123,Incompleto,0,95,0
+2026-05-30,OP001,Noturno,Detergente,Limpeza,196,115,Com_Erro,0,99,1
+2026-06-24,OP004,Vespertino,Detergente,Eletrônicos,132,71,Com_Erro,0,96,1
+2026-06-25,OP013,Vespertino,Arroz,Mobiliário,249,16,Completado,0,96,1
+2026-04-05,OP015,Noturno,Arroz,Eletrônicos,479,150,Completado,0,97,1
+2026-06-03,OP007,Matutino,Camiseta,Mobiliário,93,80,Com_Erro,0,96,1
+2026-04-04,OP002,Matutino,Mesa,Vestuário,493,29,Com_Erro,0,95,1
+2026-05-10,OP003,Vespertino,Sabonete,Vestuário,442,78,Com_Erro,0,95,1
+2026-05-25,OP019,Matutino,Cadeira,Higiene,137,161,Incompleto,0,95,1
+2026-05-03,OP015,Noturno,Camiseta,Higiene,72,152,Incompleto,0,98,1
+2026-06-20,OP018,Matutino,Tinta Impressora,Eletrônicos,318,100,Incompleto,0,98,1
+2026-06-20,OP010,Vespertino,Camiseta,Eletrônicos,164,159,Incompleto,0,98,1
+2026-04-27,OP016,Noturno,Mesa,Limpeza,336,56,Incompleto,0,98,1
+2026-05-05,OP001,Matutino,Sabonete,Limpeza,148,51,Completado,0,97,1
+2026-06-13,OP017,Matutino,Mouse,Alimentos,453,97,Completado,0,98,1
+2026-04-14,OP013,Matutino,Feijão,Vestuário,402,158,Incompleto,0,99,0
+2026-05-13,OP002,Vespertino,Cadeira,Papelaria,384,109,Com_Erro,0,95,1
+2026-06-12,OP019,Matutino,Sabonete,Alimentos,282,73,Completado,0,99,1
+2026-06-12,OP018,Vespertino,Calça,Vestuário,425,86,Completado,0,99,1
+2026-06-21,OP007,Matutino,Mouse,Papelaria,125,138,Com_Erro,0,98,1
+2026-06-27,OP016,Vespertino,Mouse,Vestuário,142,61,Completado,0,96,1
+2026-05-28,OP006,Vespertino,Feijão,Alimentos,226,136,Incompleto,0,96,1
+2026-04-25,OP001,Noturno,Detergente,Eletrônicos,206,31,Com_Erro,0,97,1
+2026-05-08,OP019,Noturno,Camiseta,Papelaria,355,38,Incompleto,0,96,1
+2026-06-16,OP015,Noturno,Cadeira,Alimentos,409,61,Incompleto,0,99,1
+2026-05-26,OP011,Matutino,Notebook,Alimentos,332,166,Completado,0,96,1
+2026-05-10,OP018,Vespertino,Sabonete,Higiene,141,12,Incompleto,0,99,0
+2026-04-10,OP004,Matutino,Camiseta,Vestuário,331,64,Completado,0,95,1
+2026-05-04,OP006,Matutino,Mesa,Higiene,344,98,Completado,0,97,1
+2026-04-26,OP006,Matutino,Notebook,Mobiliário,150,14,Incompleto,0,95,1
+2026-05-27,OP009,Matutino,Mesa,Alimentos,231,51,Incompleto,0,95,1
+2026-04-13,OP010,Matutino,Tinta Impressora,Limpeza,259,68,Completado,0,97,1
+2026-04-23,OP019,Noturno,Arroz,Vestuário,291,13,Completado,0,97,1
+2026-04-17,OP014,Noturno,Arroz,Limpeza,439,19,Incompleto,0,98,1
+2026-06-13,OP003,Vespertino,Detergente,Limpeza,175,100,Com_Erro,0,96,1
+2026-04-04,OP004,Matutino,Detergente,Higiene,35,126,Incompleto,0,97,0
+2026-06-23,OP006,Vespertino,Feijão,Higiene,76,90,Completado,0,99,0
+2026-05-07,OP002,Vespertino,Papel A4,Higiene,469,129,Com_Erro,0,95,0
+2026-05-13,OP013,Vespertino,Cadeira,Vestuário,130,10,Completado,0,99,1
+2026-06-16,OP005,Matutino,Tinta Impressora,Papelaria,425,77,Incompleto,0,96,1
+2026-04-06,OP016,Matutino,Notebook,Eletrônicos,86,137,Completado,0,96,1
+2026-04-03,OP017,Noturno,Camiseta,Eletrônicos,201,47,Completado,1,76,1
+2026-04-01,OP005,Vespertino,Notebook,Alimentos,472,156,Completado,0,99,1
+2026-05-30,OP012,Noturno,Cadeira,Vestuário,118,158,Completado,0,99,1
+2026-06-28,OP004,Vespertino,Tinta Impressora,Papelaria,311,8,Com_Erro,0,96,1
+2026-04-02,OP015,Noturno,Cadeira,Higiene,75,147,Completado,0,99,0
+2026-05-03,OP004,Vespertino,Mouse,Eletrônicos,328,8,Completado,0,96,1
+2026-06-14,OP006,Matutino,Mouse,Papelaria,479,48,Completado,0,98,1
+2026-06-21,OP012,Matutino,Mouse,Vestuário,274,135,Com_Erro,0,99,1
+2026-04-01,OP017,Matutino,Papel A4,Limpeza,270,69,Com_Erro,0,97,1
+2026-06-13,OP019,Vespertino,Mesa,Alimentos,496,154,Incompleto,0,95,1
+2026-06-22,OP005,Noturno,Mesa,Papelaria,252,88,Com_Erro,0,98,1
+2026-05-18,OP006,Vespertino,Cadeira,Higiene,61,130,Incompleto,0,99,0
+2026-05-10,OP015,Matutino,Mesa,Higiene,374,136,Com_Erro,0,95,1
+2026-06-12,OP018,Matutino,Papel A4,Higiene,368,158,Completado,0,96,1
+2026-05-15,OP008,Vespertino,Camiseta,Papelaria,165,136,Completado,1,76,1
+2026-06-24,OP017,Matutino,Mouse,Mobiliário,339,133,Incompleto,0,99,1
+2026-05-07,OP010,Vespertino,Notebook,Limpeza,131,178,Incompleto,0,97,1
+2026-05-26,OP006,Noturno,Tinta Impressora,Alimentos,277,81,Incompleto,0,95,1
+2026-05-17,OP020,Matutino,Notebook,Limpeza,308,40,Com_Erro,0,97,1
+2026-04-23,OP020,Noturno,Detergente,Alimentos,133,92,Completado,0,95,1
+2026-04-16,OP004,Noturno,Mesa,Papelaria,372,38,Completado,0,97,1
+2026-05-04,OP019,Vespertino,Sabonete,Alimentos,99,71,Incompleto,0,99,1
+2026-06-06,OP020,Noturno,Detergente,Limpeza,450,36,Com_Erro,0,99,0
+2026-06-09,OP016,Matutino,Notebook,Higiene,409,86,Completado,0,98,1
+2026-04-06,OP013,Noturno,Calça,Mobiliário,345,60,Incompleto,0,97,1
+2026-06-27,OP010,Noturno,Arroz,Vestuário,82,55,Completado,0,95,1
+2026-05-11,OP004,Noturno,Tinta Impressora,Vestuário,59,104,Completado,0,98,1
+2026-04-27,OP019,Matutino,Papel A4,Limpeza,292,91,Completado,0,97,1
+2026-06-26,OP017,Vespertino,Papel A4,Mobiliário,231,60,Incompleto,0,96,1
+2026-06-07,OP004,Noturno,Notebook,Papelaria,381,42,Completado,0,96,1
+2026-05-22,OP004,Noturno,Papel A4,Papelaria,155,130,Com_Erro,0,98,1
+2026-04-10,OP005,Matutino,Mouse,Higiene,100,24,Incompleto,0,97,1
+2026-06-27,OP004,Matutino,Tinta Impressora,Higiene,271,134,Incompleto,0,95,1
+2026-06-09,OP005,Vespertino,Tinta Impressora,Mobiliário,288,8,Completado,0,95,1
+2026-06-17,OP002,Vespertino,Arroz,Papelaria,305,10,Completado,0,98,1
+2026-05-20,OP004,Noturno,Camiseta,Papelaria,195,36,Incompleto,0,97,1
+2026-06-26,OP009,Noturno,Calça,Vestuário,127,100,Incompleto,0,99,1
+2026-04-29,OP007,Noturno,Tinta Impressora,Eletrônicos,103,28,Incompleto,0,99,1
+2026-04-05,OP014,Matutino,Notebook,Eletrônicos,196,116,Completado,0,97,1

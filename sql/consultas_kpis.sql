@@ -1,48 +1,110 @@
--- Consultas KPI para o Dashboard de Performance Logística
--- Cenário simulado - Projeto de Portfólio
+-- KPIs Dashboard Operacional Logístico
 -- PostgreSQL 12+
 -- Author: José Pérez | Data: 2026
 
--- KPI 1: Taxa de Entrega no Prazo (%)
-SELECT
-    ROUND(COUNT(CASE WHEN tempo_entrega_dias <= 3 THEN 1 END) * 100.0 /
-          NULLIF(COUNT(*), 0), 2) AS taxa_entrega_prazo_pct
-FROM entregas
-WHERE status_entrega = 'Entregue' AND data_entrega IS NOT NULL;
+-- ============================================
+-- KPI 1: Volume Total Processado
+-- ============================================
 
--- KPI 2: Tempo Médio de Entrega
 SELECT
-    ROUND(AVG(tempo_entrega_dias)::numeric, 2) AS tempo_medio_entrega_dias,
-    MIN(tempo_entrega_dias) AS min_dias,
-    MAX(tempo_entrega_dias) AS max_dias
-FROM entregas
-WHERE data_entrega IS NOT NULL;
+    SUM(f.volume) as volume_total,
+    COUNT(*) as total_operacoes,
+    ROUND(AVG(f.volume)::NUMERIC, 2) as volume_medio
+FROM fato_operacoes f;
 
--- KPI 3: Receita Total por Região
-SELECT
-    c.regiao,
-    ROUND(SUM(p.valor_total)::numeric, 2) AS receita_total,
-    COUNT(DISTINCT p.cliente_id) AS total_clientes,
-    ROUND((SUM(p.valor_total) / COUNT(DISTINCT p.cliente_id))::numeric, 2) AS ticket_medio
-FROM pedidos p
-JOIN clientes c ON p.cliente_id = c.id_cliente
-GROUP BY c.regiao
-ORDER BY receita_total DESC NULLS LAST;
+-- ============================================
+-- KPI 2: Produtividade por Operador
+-- ============================================
 
--- KPI 4: Status dos Pedidos
 SELECT
-    status,
-    COUNT(*) AS total_pedidos,
-    ROUND(SUM(valor_total)::numeric, 2) AS valor_total_status
-FROM pedidos
-GROUP BY status
-ORDER BY total_pedidos DESC;
+    op.codigo_operador,
+    op.nome_operador,
+    SUM(f.volume) as volume_processado,
+    SUM(f.tempo_processamento_minutos) as tempo_total_minutos,
+    ROUND((SUM(f.volume)::NUMERIC / SUM(f.tempo_processamento_minutos)), 2) as items_por_minuto,
+    COUNT(*) as total_operacoes,
+    ROUND(AVG(f.acuracia_percentual)::NUMERIC, 2) as acuracia_media
+FROM fato_operacoes f
+JOIN dim_operador op ON f.id_operador = op.id_operador
+GROUP BY op.id_operador, op.codigo_operador, op.nome_operador
+ORDER BY items_por_minuto DESC;
 
--- KPI 5: Disponível vs Não Disponível em Estoque
+-- ============================================
+-- KPI 3: Acurácia Média por Turno
+-- ============================================
+
 SELECT
-    COUNT(CASE WHEN quantidade > 0 THEN 1 END) AS produtos_disponiveis,
-    COUNT(CASE WHEN quantidade = 0 THEN 1 END) AS produtos_indisponiveis,
-    COUNT(*) AS total_skus,
-    ROUND(100.0 * COUNT(CASE WHEN quantidade > 0 THEN 1 END) /
-          NULLIF(COUNT(*), 0), 2) AS taxa_disponibilidade_pct
-FROM estoque;
+    t.nome_turno,
+    ROUND(AVG(f.acuracia_percentual)::NUMERIC, 2) as acuracia_media,
+    MIN(f.acuracia_percentual) as acuracia_minima,
+    MAX(f.acuracia_percentual) as acuracia_maxima,
+    COUNT(*) as total_operacoes
+FROM fato_operacoes f
+JOIN dim_turno t ON f.id_turno = t.id_turno
+GROUP BY t.id_turno, t.nome_turno
+ORDER BY acuracia_media DESC;
+
+-- ============================================
+-- KPI 4: Taxa de Divergência
+-- ============================================
+
+SELECT
+    SUM(CASE WHEN f.divergencia = 1 THEN 1 ELSE 0 END) as total_divergencias,
+    COUNT(*) as total_operacoes,
+    ROUND(100.0 * SUM(CASE WHEN f.divergencia = 1 THEN 1 ELSE 0 END) /
+          NULLIF(COUNT(*), 0), 2) as taxa_divergencia_percentual,
+    ROUND(AVG(CASE WHEN f.divergencia = 1 THEN 1 ELSE 0 END), 4) as taxa_divergencia_decimal
+FROM fato_operacoes f;
+
+-- ============================================
+-- KPI 5: SLA Cumprido (%)
+-- ============================================
+
+SELECT
+    SUM(CASE WHEN f.sla_cumprido = 1 THEN 1 ELSE 0 END) as operacoes_sla_cumprido,
+    COUNT(*) as total_operacoes,
+    ROUND(100.0 * SUM(CASE WHEN f.sla_cumprido = 1 THEN 1 ELSE 0 END) /
+          NULLIF(COUNT(*), 0), 2) as sla_cumprido_percentual
+FROM fato_operacoes f;
+
+-- ============================================
+-- KPI 6: Tempo Médio de Processamento
+-- ============================================
+
+SELECT
+    ROUND(AVG(f.tempo_processamento_minutos)::NUMERIC, 2) as tempo_medio_minutos,
+    MIN(f.tempo_processamento_minutos) as tempo_minimo_minutos,
+    MAX(f.tempo_processamento_minutos) as tempo_maximo_minutos,
+    ROUND(STDDEV_POP(f.tempo_processamento_minutos)::NUMERIC, 2) as desvio_padrao
+FROM fato_operacoes f;
+
+-- ============================================
+-- KPI 7: Performance por Categoria de Produto
+-- ============================================
+
+SELECT
+    p.categoria,
+    SUM(f.volume) as volume_total,
+    COUNT(*) as operacoes,
+    ROUND(AVG(f.acuracia_percentual)::NUMERIC, 2) as acuracia_media,
+    ROUND(100.0 * SUM(CASE WHEN f.sla_cumprido = 1 THEN 1 ELSE 0 END) /
+          NULLIF(COUNT(*), 0), 2) as sla_percentual,
+    ROUND(100.0 * SUM(CASE WHEN f.divergencia = 1 THEN 1 ELSE 0 END) /
+          NULLIF(COUNT(*), 0), 2) as taxa_divergencia
+FROM fato_operacoes f
+JOIN dim_produto p ON f.id_produto = p.id_produto
+GROUP BY p.categoria
+ORDER BY volume_total DESC;
+
+-- ============================================
+-- KPI 8: Status das Operaciónes
+-- ============================================
+
+SELECT
+    f.status,
+    COUNT(*) as total_operacoes,
+    SUM(f.volume) as volume_total,
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) as percentual
+FROM fato_operacoes f
+GROUP BY f.status
+ORDER BY total_operacoes DESC;

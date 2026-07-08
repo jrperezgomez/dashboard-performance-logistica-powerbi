@@ -1,152 +1,212 @@
-# Dashboard de Performance Logística - Power BI
+# Dashboard Operacional Logístico - Power BI
 
-**Projeto de Portfólio** | Análise de dados com Power BI, SQL e modelagem DAX em cenário simulado
+**Projeto de Portfólio** | Análise de operações logísticas com Power BI, PostgreSQL e modelagem analítica
 
-## Descrição
+## Objetivo
 
-Demonstração de habilidades em análise de dados e visualização usando Power BI, PostgreSQL e DAX. O projeto implementa um dashboard interativo para análise de performance logística com dataset fictício de pedidos, entregas e estoque.
+Demonstrar habilidades em análise de dados operacionais, BI e SQL através da construção de um dashboard executivo para monitoramento de performance logística.
 
-**⚠️ Cenário Simulado para Fins de Portfólio**: Todos os dados são fictícios e não refletem organizações reais.
+## Problema de Negócio
 
-## Stack Tecnológico
+Centros de distribuição logística processam milhares de operações diárias. Sem visibilidade em tempo real sobre produtividade, qualidade e eficiência, não é possível identificar gargalos, otimizar recursos ou manter SLAs.
 
-- **PostgreSQL**: Criação de tabelas, consultas KPI e análises operacionais
-- **Power BI**: Visualização interativa e modelagem dimensional
-- **DAX**: Cálculos avançados e medidas analíticas
-- **CSV**: Dados simulados reproduzíveis
+## Solução Proposta
 
-## Processo Analítico
+Dashboard analítico que centraliza KPIs operacionais:
+- **Volume Processado**: Total de itens movimentados por período
+- **Produtividade**: Items/hora por operador
+- **Acurácia**: Taxa de precisão em separação/contagem
+- **Taxa de Divergência**: Erros operacionais identificados
+- **SLA**: Cumprimento de tempo de processamento
+- **Tempo Médio**: Ciclo de operação
 
-### 1. Entendimento do Problema
+Modelo dimensional permite análise por operador, turno, categoria de produto e período.
 
-- Identificação de KPIs logísticos: taxa de entrega no prazo, tempo médio de entrega, disponibilidade de estoque
-- Definição de dimensões: região, categoria de produto, status de entrega
-- Escopo: cenário simulado para portfólio
+## Arquitetura do Projeto
 
-### 2. Preparação dos Dados
+### Stack Tecnológico
 
-**Schema relacional** (`sql/create_tables.sql`):
-- `pedidos`: Informações de vendas e datas
-- `clientes`: Dados demográficos e localização
-- `entregas`: Rastreamento logístico
-- `estoque`: Disponibilidade de produtos
-- `produtos`: Catálogo com categorias e preços
+- **PostgreSQL**: Base de dados (Star Schema)
+- **Power BI**: Visualização e análise interativa
+- **DAX**: Cálculos avançados e medidas
+- **SQL**: Queries analíticas com CTE, JOINs, window functions
 
-Validação com constraints e foreign keys.
-
-### 3. Modelagem
-
-- **Dimensões**: Cliente, Produto, Data
-- **Tabelas de Fatos**: Pedidos, Entregas, Estoque
-- **Modelo Estrela**: Estrutura normalizada para análise eficiente
-
-### 4. DAX (Data Analysis Expressions)
-
-Medidas calculadas para Power BI:
-- Taxa de Entrega no Prazo (%)
-- Tempo Médio de Entrega (dias)
-- Receita Total por Região
-- Disponibilidade de Estoque
-- Colunas derivadas para categorização temporal
-
-### 5. Dashboard
-
-**Páginas Propostas**:
-1. Visão Executiva: KPIs principais e tendências
-2. Performance de Entrega: Eficiência por região
-3. Análise de Estoque: Disponibilidade e rotatividade
-4. Análise de Vendas: Receita, ticket médio, clientes top
-
-Filtros por região, período e categoria.
-
-### 6. Insights
-
-- Identificação de regiões com melhor desempenho de entrega
-- Produtos com maior/menor disponibilidade
-- Tendências de vendas e sazonalidade
-- Clientes estratégicos com maior valor
-
-## Estrutura do Projeto
+### Estrutura de Dados
 
 ```
-dashboard-performance-logistica-powerbi/
-├── data/
-│   └── pedidos_logisticos.csv        # Dataset simulado
-├── sql/
-│   ├── create_tables.sql             # Schema e definição de tabelas
-│   ├── data_seed.sql                 # Populate com dados simulados
-│   ├── consultas_kpis.sql            # Queries de KPIs principais
-│   └── analises_operacionais.sql     # Análises avançadas
-├── docs/
-│   ├── modelo_dimensional.md         # Documentação do modelo
-│   └── dax_measures.md               # Exemplos de medidas DAX
-├── README.md                         # Este arquivo
-├── LICENSE                           # MIT License
-└── .gitignore
+Star Schema - Modelo Dimensional
+
+             dim_data
+               |
+fato_operacoes--+--dim_produto
+               |
+               +--dim_operador
+               |
+               +--dim_turno
 ```
+
+**Fato Central**: `fato_operacoes`
+- Granularidade: Uma linha por operação (item separado, contado, etc.)
+
+**Dimensões**:
+- `dim_data`: Datas com contexto (semana, mês, etc.)
+- `dim_produto`: Categorias de produtos
+- `dim_operador`: Equipo operacional
+- `dim_turno`: Turnos de operação
+
+## Dataset
+
+**Arquivo**: `data/pedidos_logisticos.csv`
+
+- **Registros**: 500+ operações simuladas
+- **Período**: 90 dias de operação
+- **Variáveis**:
+  - data, operador, turno
+  - produto, categoria, volume
+  - tempo_processamento_minutos
+  - status (completado, com_erro, incompleto)
+  - divergencia, acuracia_percentual
+  - sla_cumprido
+
+**Cenário**: Simulação de operações reais de centro logístico brasileño
+
+## KPIs
+
+| KPI | Fórmula | Objetivo |
+|-----|---------|----------|
+| **Volume Processado** | SUM(volume) | Total itens movimentados |
+| **Produtividade** | SUM(volume) / SUM(tempo_minutos) | Items/minuto por operador |
+| **Acurácia Média** | AVG(acuracia_percentual) | Precisão operacional |
+| **Taxa Divergência** | COUNT(divergencia=1) / COUNT(*) | % erros identificados |
+| **SLA Cumprido** | COUNT(sla_cumprido=1) / COUNT(*) | % dentro de prazo |
+| **Tempo Médio** | AVG(tempo_processamento_minutos) | Ciclo médio operacional |
+
+## Análises Realizadas
+
+### SQL Queries (consultas_kpis.sql)
+
+Principais KPIs para monitoreo:
+- Taxa de cumplimiento SLA por turno
+- Produtividad por operador (ranking)
+- Acurácia por categoría de producto
+- Divergencias por turno y período
+
+### SQL Queries Avançadas (analises_operacionais.sql)
+
+Análisis profundos:
+- Gargalos por turno (tempo vs volume)
+- Performance comparativa: melhor vs pior operador
+- Trending: produtividade semanal
+- Correlação: categoria vs divergencias
+
+## Tecnologias
+
+- **PostgreSQL 12+**: Banco relacional, queries otimizadas
+- **Power BI Desktop**: Visualización e interactividad
+- **DAX**: 10+ medidas calculadas
+- **SQL avanzado**: CTEs, window functions, subconsultas
+- **CSV**: Dados reproduzíveis
 
 ## Como Executar
 
-### Pré-requisitos
+### 1. Preparação
 
-- PostgreSQL 12+
-- Power BI Desktop (versão recente)
-- Editor de texto ou IDE SQL
+```bash
+# Clonar repositorio
+git clone https://github.com/jrperezgomez/dashboard-performance-logistica-powerbi.git
+cd dashboard-performance-logistica-powerbi
+```
 
-### Passos
+### 2. Database PostgreSQL
 
-1. **Criar banco de dados**:
-   ```sql
-   CREATE DATABASE logistica_portfolio;
-   ```
+```bash
+# Crear banco
+createdb logistica_portfolio
 
-2. **Executar scripts SQL**:
-   ```sql
-   -- Criar tabelas
-   \i sql/create_tables.sql
-   
-   -- Inserir dados simulados
-   \i sql/data_seed.sql
-   ```
+# Executar schema
+psql logistica_portfolio -f sql/create_tables.sql
 
-3. **Validar dados**:
-   ```sql
-   SELECT COUNT(*) FROM pedidos;
-   SELECT COUNT(*) FROM entregas;
-   SELECT COUNT(*) FROM estoque;
-   ```
+# Popular dados
+psql logistica_portfolio -f sql/data_seed.sql
+```
 
-4. **Conectar Power BI**:
-   - Usar PostgreSQL connector
-   - Importar tabelas do schema
-   - Criar modelo dimensional conforme `docs/modelo_dimensional.md`
-   - Implementar medidas DAX conforme `docs/dax_measures.md`
+### 3. Validar Dados
 
-5. **Explorar**: Interagir com filtros e visualizações
+```sql
+SELECT COUNT(*) FROM fato_operacoes;        -- esperado: 500+
+SELECT COUNT(*) FROM dim_operador;          -- esperado: 20+
+SELECT COUNT(*) FROM dim_produto;           -- esperado: 15+
+```
 
-## Ferramentas e Versões
+### 4. Power BI
 
-- **PostgreSQL**: 12.0+
-- **Power BI Desktop**: Versão mais recente
-- **DAX Studio**: Para otimização (opcional)
+1. Abrir Power BI Desktop
+2. Conectar a PostgreSQL
+3. Importar tabelas (fato + dimensões)
+4. Crear modelo relacional (conforme `docs/modelo_dimensional.md`)
+5. Implementar medidas DAX (conforme `docs/dax_measures.md`)
+6. Construir dashboard (conforme `powerbi/README.md`)
+
+### 5. Explorar
+
+Testar cada página:
+- Visão Executiva (KPIs)
+- Produtividade (operador ranking)
+- Qualidade (divergencias, acurácia)
+- Tendências (series temporales)
+
+## Insights Esperados
+
+- **Operador X** tem produtividade 15% maior que média
+- **Turno Y** gera 2x mais divergencias que outros
+- **Categoria Z** demanda 30% mais tempo de processamento
+- **SLA**: Cumprimento caiu de 98% para 94% semana passada
+
+## Próximas Melhorias
+
+- Integración con sistema ERP real
+- Alertas automáticas para SLA
+- Forecast de volume usando ML
+- Dashboard mobile (Power BI Mobile)
+- Análisis de causas raíz (5W2H)
 
 ## Documentação
 
-- `docs/modelo_dimensional.md`: Explicação de tabelas, relações e granularidade
-- `docs/dax_measures.md`: Exemplos de medidas DAX para implementação
+- `docs/modelo_dimensional.md`: Explicação completa do schema
+- `docs/kpis.md`: Cada KPI con fórmula e interpretación
+- `docs/dax_measures.md`: Medidas DAX implementadas
+- `powerbi/README.md`: Estructura recomendada del dashboard
 
 ## Notas Importantes
 
-- ⚠️ **Dataset Fictício**: Todos os dados são simulados para fins educacionais e de portfólio
-- 🌟 **Projeto de Aprendizado**: Desenvolvido como exemplo de habilidades em análise de dados
-- 🔄 **Reproduzível**: Scripts SQL permitem recriar dados simulados em qualquer ambiente
+⚠️ **Cenário Simulado**: Todos os dados são fictícios baseados em padrões reais de operações logísticas brasileñas
+
+🎯 **Proyecto de Aprendizado**: Desenvolvido para demonstração de habilidades em:
+- Modelagem dimensional (Star Schema)
+- SQL análitico (CTE, window functions, JOINs)
+- DAX avanzado (medidas, contexto, variables)
+- BI design (UX, interatividad, storytelling)
+
+📊 **Reproduzível**: Scripts SQL permitem recriar cenário completo em qualquer ambiente PostgreSQL
+
+## Tecnologias Utilizadas
+
+```
+LENGUAJES:    SQL, DAX, M Query
+BANCO:        PostgreSQL 12.0+
+BI:           Power BI Desktop (versão 2024+)
+FERRAMENTAS:  pgAdmin, DAX Studio, Git
+MÉTODO:       Star Schema, Análisis Dimensional
+```
 
 ## Contato
 
-**José Pérez** - Analista de Dados Jr  
-Curitiba, PR | Brasil  
-[LinkedIn](https://www.linkedin.com/in/jose-ronaldo-perez-gomez) | [GitHub](https://github.com/jrperezgomez)
+**José Pérez** - Analista de Dados Jr | BI Operacional  
+📧 bookingperezjose@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/jose-ronaldo-perez-gomez) | [GitHub](https://github.com/jrperezgomez)
+
+Curitiba, PR | Brasil
 
 ---
 
-*Projeto desenvolvido em julho de 2026 para demonstração de habilidades em análise de dados e BI.*
+*Projeto desenvolvido em julho de 2026 para demonstração de competências em análise de dados operacionais e BI.*

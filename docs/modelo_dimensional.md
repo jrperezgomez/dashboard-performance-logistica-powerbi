@@ -1,216 +1,197 @@
-# Modelo Dimensional - Dashboard de Performance Logística
+# Modelo Dimensional - Dashboard Operacional Logístico
 
-## Visão Geral
+## Star Schema
 
-Este documento descreve a estrutura dimensional do modelo de dados implementado no PostgreSQL para suportar análises de performance logística em Power BI.
-
-**Padrão**: Modelo Estrela (Star Schema)
-
----
+```
+                dim_data
+                   |
+                   |
+dim_operador ---- fato_operacoes ---- dim_produto
+                   |
+                   |
+                dim_turno
+```
 
 ## Tabelas Dimensionais
 
-### 1. Tabela: `clientes`
+### dim_data
 
-**Tipo**: Dimensão
+Contexto temporal das operações.
 
-**Descrição**: Armazena informações dos clientes que realizam pedidos.
-
-**Colunas**:
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `id_cliente` | INT | Chave primária (PK) |
-| `nome_cliente` | VARCHAR(100) | Nome do cliente |
-| `cidade` | VARCHAR(50) | Cidade de localização |
-| `regiao` | VARCHAR(50) | Região Brasil (Sudeste, Sul, Nordeste, Centro-Oeste) |
-| `data_cadastro` | DATE | Data de registro do cliente |
+| id_data | INT | Chave primária |
+| data_completa | DATE | Data da operação |
+| ano | INT | Ano (2026) |
+| mes | INT | Mês (4-6) |
+| trimestre | INT | Trimestre (2) |
+| nome_mes | VARCHAR | Nome mês português |
+| nome_dia_semana | VARCHAR | Dia semana português |
+| semana_ano | INT | Semana do ano |
 
-**Relacionamentos**:
-- Referenciada por: `pedidos.cliente_id`
-- Relacionamento: 1:N (um cliente para muitos pedidos)
-
-**Granularidade**: Um cliente por linha
+**Granularidade**: Uma linha por dia
 
 ---
 
-### 2. Tabela: `produtos`
+### dim_operador
 
-**Tipo**: Dimensão
+Dados do pessoal operacional.
 
-**Descrição**: Catálogo de produtos disponíveis.
-
-**Colunas**:
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `id_produto` | INT | Chave primária (PK) |
-| `nome_produto` | VARCHAR(100) | Nome do produto |
-| `categoria` | VARCHAR(50) | Categoria (Eletrônicos, Vestuário, Alimentos) |
-| `preco` | DECIMAL(10, 2) | Preço unitário |
-| `peso_kg` | DECIMAL(8, 2) | Peso para cálculo logístico |
+| id_operador | INT | Chave primária |
+| codigo_operador | VARCHAR | Identificador (OP001-OP020) |
+| nome_operador | VARCHAR | Nome completo |
+| experiencia_meses | INT | Meses trabalhando |
+| treinado | BOOLEAN | Status de treinamento |
 
-**Relacionamentos**:
-- Referenciada por: `estoque.id_produto`
-- Relacionamento: 1:N (um produto para muitos registros de estoque)
+**Granularidade**: Um operador por linha
+
+**Dados**: 20 operadores com experiência 5-48 meses
+
+---
+
+### dim_produto
+
+Catálogo de produtos processados.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| id_produto | INT | Chave primária |
+| nome_produto | VARCHAR | Nome produto |
+| categoria | VARCHAR | Categoria |
+| peso_kg | DECIMAL | Peso para logística |
 
 **Granularidade**: Um produto por linha
 
+**Categorias**:
+- Eletrônicos
+- Vestuário
+- Alimentos
+- Limpeza
+- Higiene
+- Mobiliário
+- Papelaria
+
 ---
 
-## Tabelas de Fatos
+### dim_turno
 
-### 3. Tabela: `pedidos`
+Turnos de operação.
 
-**Tipo**: Fato
-
-**Descrição**: Eventos transacionais de pedidos.
-
-**Colunas**:
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `id_pedido` | INT | Chave primária (PK) |
-| `data_pedido` | DATE | Data do pedido |
-| `cliente_id` | INT | Chave estrangeira (FK) → `clientes` |
-| `status` | VARCHAR(50) | Status (Pendente, Confirmado, Entregue, Cancelado) |
-| `valor_total` | DECIMAL(10, 2) | Valor total do pedido |
+| id_turno | INT | Chave primária |
+| nome_turno | VARCHAR | Matutino / Vespertino / Noturno |
+| hora_inicio | TIME | Hora início |
+| hora_fim | TIME | Hora fim |
 
-**Relacionamentos**:
-- Referencia: `clientes.id_cliente`
-- Referenciada por: `entregas.id_pedido`
-
-**Granularidade**: Um pedido por linha
+**Granularidade**: Um turno por linha
 
 ---
 
-### 4. Tabela: `entregas`
+## Tabela de Fatos
 
-**Tipo**: Fato Transacional
+### fato_operacoes
 
-**Descrição**: Rastreamento logístico de pedidos.
+Registro de cada operação (separação, contagem, embalagem, etc).
 
-**Colunas**:
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `id_entrega` | INT | Chave primária (PK) |
-| `id_pedido` | INT | Chave estrangeira (FK) → `pedidos` |
-| `data_envio` | DATE | Data do envio |
-| `data_entrega` | DATE | Data da entrega |
-| `tempo_entrega_dias` | INT | Dias para entrega |
-| `status_entrega` | VARCHAR(50) | Status (Pendente, Entregue, Cancelado) |
+| id_operacao | INT | Chave primária |
+| id_data | INT | FK → dim_data |
+| id_operador | INT | FK → dim_operador |
+| id_turno | INT | FK → dim_turno |
+| id_produto | INT | FK → dim_produto |
+| volume | INT | Unidades processadas |
+| tempo_processamento_minutos | INT | Tempo gasto |
+| status | VARCHAR | Completado / Com_Erro / Incompleto |
+| divergencia | INT | 1=há erro, 0=sem erro |
+| acuracia_percentual | INT | % acertos (0-100) |
+| sla_cumprido | INT | 1=dentro prazo, 0=atrasado |
 
-**Relacionamentos**:
-- Referencia: `pedidos.id_pedido`
+**Granularidade**: Uma operação = uma linha
 
-**Granularidade**: Uma entrega por linha
-
-**Observação**: Derivado de `pedidos` com lógica de tempo
-
----
-
-### 5. Tabela: `estoque`
-
-**Tipo**: Fato Snapshot
-
-**Descrição**: Snapshot de disponibilidade de produtos em armazéns.
-
-**Colunas**:
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `id_estoque` | INT | Chave primária (PK) |
-| `id_produto` | INT | Chave estrangeira (FK) → `produtos` |
-| `quantidade` | INT | Unidades em estoque |
-| `localizacao` | VARCHAR(50) | Localização no armazém |
-| `data_atualizacao` | DATE | Última atualização |
-
-**Relacionamentos**:
-- Referencia: `produtos.id_produto`
-
-**Granularidade**: Um SKU por localização por data
+**Volume de dados**: ~500 operaciónes (90 dias)
 
 ---
 
-## Diagrama de Relacionamentos
+## Relacionamentos
 
-```
-clientes ────────┐
-                 │
-                 ├──> pedidos
-                 │
-                 └──> entregas
-                 
-produtos ────────┐
-                 │
-                 └──> estoque
-```
+1. **fato_operacoes → dim_data**
+   - Cardinalidade: N:1
+   - Uso: Agrupar por período
 
----
+2. **fato_operacoes → dim_operador**
+   - Cardinalidade: N:1
+   - Uso: Análise por operador
 
-## Modelagem em Power BI
+3. **fato_operacoes → dim_turno**
+   - Cardinalidade: N:1
+   - Uso: Comparar desempenho turno
 
-### Relacionamentos a Criar
-
-1. **Clientes → Pedidos**
-   - `clientes.id_cliente` = `pedidos.cliente_id`
-   - Cardinalidade: 1:N
-   - Tipo: Um para Muitos
-
-2. **Pedidos → Entregas**
-   - `pedidos.id_pedido` = `entregas.id_pedido`
-   - Cardinalidade: 1:N
-   - Tipo: Um para Muitos
-
-3. **Produtos → Estoque**
-   - `produtos.id_produto` = `estoque.id_produto`
-   - Cardinalidade: 1:N
-   - Tipo: Um para Muitos
-
-### Considerações para DAX
-
-- **Dimensão Temporal**: Criar tabela de datas com granularidade diária
-- **Medidas de SLA**: Comparar `data_entrega` contra SLA definido
-- **Análise Regional**: Agrupar por `clientes.regiao`
-- **Rotatividade de Estoque**: Correlacionar `pedidos` com `estoque`
-
----
-
-## Fatos e Dimensões Propostas
-
-| Tipo | Tabela | Uso |
-|------|--------|-----|
-| Dimensão | clientes | Análise por região, cidade, segmentação |
-| Dimensão | produtos | Análise por categoria, preço, peso |
-| Fato | pedidos | Volume, receita, padrões de compra |
-| Fato | entregas | Performance logística, SLA, tempo |
-| Fato | estoque | Disponibilidade, rotatividade, localização |
+4. **fato_operacoes → dim_produto**
+   - Cardinalidade: N:1
+   - Uso: Análise por categoria
 
 ---
 
 ## Métricas Derivadas (para DAX)
 
-### Baseadas em Pedidos
+### Volume
 
-- **Total de Pedidos**: `COUNT(pedidos[id_pedido])`
-- **Receita Total**: `SUM(pedidos[valor_total])`
-- **Ticket Médio**: `AVERAGE(pedidos[valor_total])`
-- **Pedidos por Status**: `COUNTIF(pedidos[status], <status>)`
+```
+Total Volume = SUM(fato_operacoes[volume])
+Volume Médio = AVERAGE(fato_operacoes[volume])
+```
 
-### Baseadas em Entregas
+### Produtividade
 
-- **Taxa de Entrega no Prazo**: `COUNT(entregas com tempo <= 3) / COUNT(entregas entregues)`
-- **Tempo Médio**: `AVERAGE(entregas[tempo_entrega_dias])`
-- **Entregas Pendentes**: `COUNTIF(entregas[status_entrega], "Pendente")`
+```
+Items/Minuto = 
+  SUM(fato_operacoes[volume]) / 
+  SUM(fato_operacoes[tempo_processamento_minutos])
+```
 
-### Baseadas em Estoque
+### Qualidade
 
-- **Produtos Disponíveis**: `COUNTIF(estoque[quantidade], > 0)`
-- **Estoque Total**: `SUM(estoque[quantidade])`
-- **Taxa de Disponibilidade**: `Produtos Disponíveis / Total de SKUs`
+```
+Acurácia Média = AVERAGE(fato_operacoes[acuracia_percentual])
+
+Taxa Divergência = 
+  COUNTIF(fato_operacoes[divergencia], 1) / 
+  COUNTIF(fato_operacoes[divergencia])
+```
+
+### SLA
+
+```
+SLA Cumprido % = 
+  COUNTIF(fato_operacoes[sla_cumprido], 1) / 
+  COUNTIF(fato_operacoes[sla_cumprido])
+```
+
+### Tempo
+
+```
+Tempo Médio = AVERAGE(fato_operacoes[tempo_processamento_minutos])
+```
 
 ---
 
-## Notas Sobre o Cenário Simulado
+## Padrões de Análise Esperados
 
-- Todos os dados são fictícios para fins educacionais
-- As relações FK garantem integridade referencial
-- O modelo suporta análises operacionais em tempo real
-- Índices foram criados em campos de busca frequente para performance
+1. **Por Operador**: Quem tem melhor produtividade?
+2. **Por Turno**: Qual turno tem mais divergências?
+3. **Por Categoria**: Qual produto é mais difícil?
+4. **Série Temporal**: Há melhoria ao longo de 90 dias?
+5. **Gargalos**: Onde investir em treinamento?
 
+---
+
+## Notas de Implementação
+
+- Modelo é normalizado e otimizado para análise
+- Índices criados em FK para melhor performance
+- Dataset é simulado mas baseado em padrões logísticos reais
+- Estrutura suporta crescimento até 1M+ operações
