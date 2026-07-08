@@ -170,12 +170,47 @@ Testar cada página:
 - Dashboard mobile (Power BI Mobile)
 - Análisis de causas raíz (5W2H)
 
+## Dashboard Web Interativo
+
+**Acesso imediato sem Power BI Desktop**
+
+Abrir em qualquer navegador: [`web_dashboard/index.html`](web_dashboard/index.html)
+
+### Funcionalidades
+
+✅ **5 KPIs** em tempo real (Volume, Produtividade, SLA, Acurácia, Divergência)  
+✅ **5 Gráficos** interativos com Plotly.js  
+✅ **4 Filtros** dinâmicos (Turno, Categoria, Operador)  
+✅ **Responsivo** (desktop / tablet / mobile)  
+✅ **Zero dependencias backend** - 100% client-side  
+
+### Como Usar
+
+**Opção 1 - Rápida**: Clicar duplo em `web_dashboard/index.html`
+
+**Opção 2 - Servidor Local**:
+```bash
+python -m http.server 8000
+# Abrir: http://localhost:8000/web_dashboard/
+```
+
+### Tecnologias
+
+- HTML5 + CSS3 + JavaScript puro
+- Plotly.js para gráficos interativos
+- CSV parser nativo (sem bibliotecas)
+- Design corporativo responsivo
+
+---
+
 ## Documentação
 
 - `docs/modelo_dimensional.md`: Explicação completa do schema
 - `docs/kpis.md`: Cada KPI con fórmula e interpretación
 - `docs/dax_measures.md`: Medidas DAX implementadas
+- `powerbi/dashboard_specification.md`: Especificação técnica Power BI
 - `powerbi/README.md`: Estructura recomendada del dashboard
+- `web_dashboard/README.md`: Guia dashboard web
 
 ## Notas Importantes
 

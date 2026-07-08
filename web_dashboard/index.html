@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Operacional Logístico</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Dashboard Operacional Logístico</h1>
+                <p class="subtitle">Análise de Performance - Simulação de Operações</p>
+            </div>
+            <div class="header-status">
+                <span class="status-label">Dados Carregados</span>
+                <span id="record-count" class="status-value">0</span>
+            </div>
+        </header>
+
+        <!-- Filtros -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label for="filter-turno">Turno:</label>
+                <select id="filter-turno">
+                    <option value="">Todos</option>
+                    <option value="Matutino">Matutino</option>
+                    <option value="Vespertino">Vespertino</option>
+                    <option value="Noturno">Noturno</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-categoria">Categoria:</label>
+                <select id="filter-categoria">
+                    <option value="">Todas</option>
+                    <option value="Eletrônicos">Eletrônicos</option>
+                    <option value="Vestuário">Vestuário</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Limpeza">Limpeza</option>
+                    <option value="Higiene">Higiene</option>
+                    <option value="Mobiliário">Mobiliário</option>
+                    <option value="Papelaria">Papelaria</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-operador">Operador:</label>
+                <select id="filter-operador">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <button id="btn-reset" class="btn-reset">Limpar Filtros</button>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpis-section">
+            <div class="kpi-card">
+                <div class="kpi-icon">📦</div>
+                <div class="kpi-content">
+                    <p class="kpi-label">Volume Processado</p>
+                    <p class="kpi-value" id="kpi-volume">0</p>
+                    <p class="kpi-unit">itens</p>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">⚡</div>
+                <div class="kpi-content">
+                    <p class="kpi-label">Produtividade</p>
+                    <p class="kpi-value" id="kpi-produtividade">0.00</p>
+                    <p class="kpi-unit">itens/min</p>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">✓</div>
+                <div class="kpi-content">
+                    <p class="kpi-label">SLA Cumprido</p>
+                    <p class="kpi-value" id="kpi-sla">0%</p>
+                    <p class="kpi-unit">operações</p>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">🎯</div>
+                <div class="kpi-content">
+                    <p class="kpi-label">Acurácia Média</p>
+                    <p class="kpi-value" id="kpi-acuracia">0%</p>
+                    <p class="kpi-unit">precisão</p>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">⚠️</div>
+                <div class="kpi-content">
+                    <p class="kpi-label">Taxa Divergência</p>
+                    <p class="kpi-value" id="kpi-divergencia">0%</p>
+                    <p class="kpi-unit">erros</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>Volume por Data</h3>
+                <div id="chart-volume" class="chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Produtividade por Operador</h3>
+                <div id="chart-produtividade" class="chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Performance por Turno</h3>
+                <div id="chart-turno" class="chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Divergências por Categoria</h3>
+                <div id="chart-divergencia" class="chart"></div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Evolução Semanal</h3>
+                <div id="chart-evolucao" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Projeto de Portfólio - Análise de Operações Logísticas | Simulação de Dados | Julho 2026</p>
+            <p><a href="https://github.com/jrperezgomez/dashboard-performance-logistica-powerbi" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
