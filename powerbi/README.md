@@ -4,6 +4,13 @@
 
 Dashboard operacional com 4 páginas interativas para análise de performance logística.
 
+**⚠️ Importante**: Para implementação técnica completa, consulte [dashboard_specification.md](dashboard_specification.md) com:
+- Modelo de dados detalhado
+- Todas medidas DAX com código
+- Layout exato de cada página
+- Guia passo-a-passo construção Power BI
+- Checklist validação
+
 ---
 
 ## Página 1: Visão Executiva
